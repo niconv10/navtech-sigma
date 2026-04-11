@@ -1,0 +1,20 @@
+-- Add rich syllabus data columns to courses table
+ALTER TABLE public.courses
+ADD COLUMN IF NOT EXISTS section TEXT,
+ADD COLUMN IF NOT EXISTS crn TEXT,
+ADD COLUMN IF NOT EXISTS institution TEXT,
+ADD COLUMN IF NOT EXISTS delivery_mode TEXT,
+ADD COLUMN IF NOT EXISTS description TEXT,
+ADD COLUMN IF NOT EXISTS teaching_assistant JSONB,
+ADD COLUMN IF NOT EXISTS materials JSONB,
+ADD COLUMN IF NOT EXISTS prerequisites JSONB,
+ADD COLUMN IF NOT EXISTS grading_categories JSONB,
+ADD COLUMN IF NOT EXISTS modules JSONB,
+ADD COLUMN IF NOT EXISTS policies JSONB,
+ADD COLUMN IF NOT EXISTS ai_policy JSONB,
+ADD COLUMN IF NOT EXISTS academic_integrity JSONB,
+ADD COLUMN IF NOT EXISTS important_dates JSONB,
+ADD COLUMN IF NOT EXISTS learning_objectives TEXT[],
+ADD COLUMN IF NOT EXISTS support_resources JSONB,
+ADD COLUMN IF NOT EXISTS communication JSONB,
+ADD COLUMN IF NOT EXISTS final_exam JSONB;

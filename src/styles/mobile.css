@@ -1,0 +1,148 @@
+/* ============================================
+   RESPONSIVE - HERO
+   ============================================ */
+
+@media (max-width: 900px) {
+  .grades-hero {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .hero-ring-section {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-grade-section {
+    text-align: center;
+  }
+
+  .hero-grade-display {
+    justify-content: center;
+  }
+
+  .hero-grade-number {
+    font-size: 56px;
+  }
+
+  .hero-stats {
+    padding-left: 0;
+    padding-top: 20px;
+    border-left: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .dark .hero-stats {
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@media (max-width: 640px) {
+  .grades-hero {
+    padding: 20px;
+  }
+
+  .hero-grade-number {
+    font-size: 48px;
+  }
+
+  .hero-stats {
+    gap: 16px;
+  }
+
+  .hero-stat-value {
+    font-size: 24px;
+  }
+}
+
+/* ============================================
+   ULTRA-SMALL SCREENS (≤ 390px — iPhone SE, Galaxy A)
+   ============================================ */
+
+@media (max-width: 390px) {
+  /* Course detail hero */
+  .grades-hero {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .hero-grade-number {
+    font-size: 40px;
+  }
+
+  .hero-stat-value {
+    font-size: 20px;
+  }
+
+  /* Quick stats cards */
+  .quick-stat-card {
+    padding: 10px;
+  }
+
+  .quick-stat-value {
+    font-size: 18px;
+  }
+
+  .quick-stats-grid {
+    gap: 8px;
+  }
+
+  /* Reduce widget padding */
+  .glass-widget .widget-header,
+  .glass-widget [class*="px-4"] {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* Assignment list: due date column stays visible at all sizes
+     so users can always set/edit due dates from the course detail */
+
+  /* Sidebar nav items — slightly tighter on tiny phones */
+  .mobile-nav-item {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - LIST
+   ============================================ */
+
+@media (max-width: 768px) {
+  .grades-list-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-minimal {
+    min-width: auto;
+  }
+
+  .filter-pills {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-pill {
+    flex-shrink: 0;
+  }
+
+  .toolbar-right {
+    justify-content: flex-end;
+  }
+
+  .col-type,
+  .col-weight {
+    display: none;
+  }
+
+  .col-name {
+    min-width: 100px;
+  }
+}
