@@ -1,0 +1,90 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <!-- Background: near-black teal → mid teal → deep indigo -->
+    <linearGradient id="a-bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#071a18"/>
+      <stop offset="42%"  stop-color="#0e4f47"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+
+    <!-- Surface sheen: light hits top-left, darkens bottom-right -->
+    <radialGradient id="a-sheen" cx="28%" cy="22%" r="58%">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0.13)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.28)"/>
+    </radialGradient>
+
+    <!-- Sigma glow: teal → violet bloom behind the mark -->
+    <linearGradient id="a-glow" x1="141" y1="130" x2="371" y2="382" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#5eead4"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+
+    <!-- Sigma mark: crisp white, slightly softer at base -->
+    <linearGradient id="a-mark" x1="141" y1="130" x2="371" y2="382" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.82)"/>
+    </linearGradient>
+
+    <!-- Bloom filter for glow layer -->
+    <filter id="a-bloom" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Drop shadow for depth on main mark -->
+    <filter id="a-shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="rgba(0,0,0,0.65)"/>
+    </filter>
+
+  </defs>
+
+  <!-- ── BACKGROUND ── -->
+  <path d="M 256 20 C 431.82 20, 492 80.18, 492 256
+           C 492 431.82, 431.82 492, 256 492
+           C 80.18 492, 20 431.82, 20 256
+           C 20 80.18, 80.18 20, 256 20 Z"
+    fill="url(#a-bg)"/>
+
+  <!-- Surface sheen overlay -->
+  <path d="M 256 20 C 431.82 20, 492 80.18, 492 256
+           C 492 431.82, 431.82 492, 256 492
+           C 80.18 492, 20 431.82, 20 256
+           C 20 80.18, 80.18 20, 256 20 Z"
+    fill="url(#a-sheen)"/>
+
+  <!-- Subtle concentric ring texture (very low opacity) -->
+  <circle cx="256" cy="256" r="168" fill="none"
+    stroke="rgba(255,255,255,0.035)" stroke-width="72"/>
+  <circle cx="256" cy="256" r="95"  fill="none"
+    stroke="rgba(255,255,255,0.025)" stroke-width="40"/>
+
+  <!-- ── SIGMA MARK ── -->
+
+  <!-- Layer 1: wide glow bloom (teal-violet) -->
+  <polyline points="141,130 371,130 158,256 371,382 141,382"
+    stroke="url(#a-glow)" stroke-width="58"
+    fill="none" stroke-linecap="round" stroke-linejoin="round"
+    opacity="0.22" filter="url(#a-bloom)"/>
+
+  <!-- Layer 2: shadow offset (depth illusion) -->
+  <polyline points="141,130 371,130 158,256 371,382 141,382"
+    stroke="rgba(0,0,0,0.5)" stroke-width="28"
+    fill="none" stroke-linecap="round" stroke-linejoin="round"
+    transform="translate(4,7)"/>
+
+  <!-- Layer 3: main white mark -->
+  <polyline points="141,130 371,130 158,256 371,382 141,382"
+    stroke="url(#a-mark)" stroke-width="28"
+    fill="none" stroke-linecap="round" stroke-linejoin="round"
+    filter="url(#a-shadow)"/>
+
+  <!-- Layer 4: highlight on leading edges (top bar + first diagonal) -->
+  <polyline points="141,130 371,130 158,256"
+    stroke="rgba(255,255,255,0.52)" stroke-width="9"
+    fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+</svg>

@@ -1,0 +1,91 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <!-- Background: flows diagonally violet → teal → cyan (bottom-left to top-right) -->
+    <linearGradient id="b-bg" x1="0" y1="512" x2="512" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#3b0764"/>
+      <stop offset="28%"  stop-color="#6d28d9"/>
+      <stop offset="60%"  stop-color="#0d9488"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+
+    <!-- Atmospheric glow: bright teal from top-right -->
+    <radialGradient id="b-atm1" cx="72%" cy="22%" r="48%">
+      <stop offset="0%"   stop-color="rgba(20,184,166,0.55)"/>
+      <stop offset="100%" stop-color="rgba(20,184,166,0)"/>
+    </radialGradient>
+
+    <!-- Atmospheric glow: soft purple from bottom-left -->
+    <radialGradient id="b-atm2" cx="22%" cy="80%" r="48%">
+      <stop offset="0%"   stop-color="rgba(167,139,250,0.48)"/>
+      <stop offset="100%" stop-color="rgba(167,139,250,0)"/>
+    </radialGradient>
+
+    <!-- Center brightening (like a light source behind the mark) -->
+    <radialGradient id="b-center" cx="50%" cy="50%" r="32%">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0.14)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+
+    <!-- Mark: warm clean white with a faint teal tint at base -->
+    <linearGradient id="b-mark" x1="141" y1="126" x2="371" y2="386" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="55%"  stop-color="rgba(255,255,255,0.94)"/>
+      <stop offset="100%" stop-color="rgba(224,253,254,0.88)"/>
+    </linearGradient>
+
+    <!-- Soft bloom filter for mark glow -->
+    <filter id="b-bloom" x="-65%" y="-65%" width="230%" height="230%">
+      <feGaussianBlur stdDeviation="20" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+  </defs>
+
+  <!-- ── BACKGROUND ── -->
+  <path d="M 256 20 C 431.82 20, 492 80.18, 492 256
+           C 492 431.82, 431.82 492, 256 492
+           C 80.18 492, 20 431.82, 20 256
+           C 20 80.18, 80.18 20, 256 20 Z"
+    fill="url(#b-bg)"/>
+
+  <!-- Atmospheric light layers -->
+  <path d="M 256 20 C 431.82 20, 492 80.18, 492 256
+           C 492 431.82, 431.82 492, 256 492
+           C 80.18 492, 20 431.82, 20 256
+           C 20 80.18, 80.18 20, 256 20 Z"
+    fill="url(#b-atm1)"/>
+  <path d="M 256 20 C 431.82 20, 492 80.18, 492 256
+           C 492 431.82, 431.82 492, 256 492
+           C 80.18 492, 20 431.82, 20 256
+           C 20 80.18, 80.18 20, 256 20 Z"
+    fill="url(#b-atm2)"/>
+  <path d="M 256 20 C 431.82 20, 492 80.18, 492 256
+           C 492 431.82, 431.82 492, 256 492
+           C 80.18 492, 20 431.82, 20 256
+           C 20 80.18, 80.18 20, 256 20 Z"
+    fill="url(#b-center)"/>
+
+  <!-- ── SIGMA MARK ── -->
+
+  <!-- Outer bloom: wide soft white halo -->
+  <polyline points="141,126 371,126 158,256 371,386 141,386"
+    stroke="rgba(255,255,255,0.28)" stroke-width="72"
+    fill="none" stroke-linecap="round" stroke-linejoin="round"
+    filter="url(#b-bloom)"/>
+
+  <!-- Mid bloom: tighter warm glow -->
+  <polyline points="141,126 371,126 158,256 371,386 141,386"
+    stroke="rgba(255,255,255,0.18)" stroke-width="44"
+    fill="none" stroke-linecap="round" stroke-linejoin="round"
+    filter="url(#b-bloom)"/>
+
+  <!-- Main mark: thick, rounded, organic -->
+  <polyline points="141,126 371,126 158,256 371,386 141,386"
+    stroke="url(#b-mark)" stroke-width="34"
+    fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+</svg>

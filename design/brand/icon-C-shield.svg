@@ -1,0 +1,138 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <!-- Background: near-black with a cold blue tint -->
+    <linearGradient id="c-bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#060d18"/>
+      <stop offset="100%" stop-color="#0c1525"/>
+    </linearGradient>
+
+    <!-- Ambient glow behind shield (teal, centered) -->
+    <radialGradient id="c-ambient" cx="50%" cy="52%" r="36%">
+      <stop offset="0%"   stop-color="rgba(13,148,136,0.28)"/>
+      <stop offset="100%" stop-color="rgba(13,148,136,0)"/>
+    </radialGradient>
+
+    <!-- Shield fill: teal to deep purple -->
+    <linearGradient id="c-shield" x1="156" y1="148" x2="356" y2="394" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#0f766e"/>
+      <stop offset="48%"  stop-color="#0d9488"/>
+      <stop offset="100%" stop-color="#5b21b6"/>
+    </linearGradient>
+
+    <!-- Shield surface: light catches top-left corner -->
+    <linearGradient id="c-sheen" x1="156" y1="148" x2="256" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0.2)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+
+    <!-- Shield bloom (glow around outer edge) -->
+    <filter id="c-shieldbloom" x="-35%" y="-30%" width="170%" height="165%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Sigma mark glow (tight, crisp) -->
+    <filter id="c-markglow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+  </defs>
+
+  <!-- ── BACKGROUND ── -->
+  <path d="M 256 20 C 431.82 20, 492 80.18, 492 256
+           C 492 431.82, 431.82 492, 256 492
+           C 80.18 492, 20 431.82, 20 256
+           C 20 80.18, 80.18 20, 256 20 Z"
+    fill="url(#c-bg)"/>
+
+  <!-- Ambient glow -->
+  <path d="M 256 20 C 431.82 20, 492 80.18, 492 256
+           C 492 431.82, 431.82 492, 256 492
+           C 80.18 492, 20 431.82, 20 256
+           C 20 80.18, 80.18 20, 256 20 Z"
+    fill="url(#c-ambient)"/>
+
+  <!-- Subtle dot-grid texture via repeating tiny circles (sampled) -->
+  <circle cx="180" cy="130" r="1.2" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="210" cy="130" r="1.2" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="302" cy="130" r="1.2" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="332" cy="130" r="1.2" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="180" cy="382" r="1.2" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="332" cy="382" r="1.2" fill="rgba(255,255,255,0.06)"/>
+
+  <!-- ── SHIELD ── -->
+  <!-- Shield path: flat top, rounded top corners, tapers to point -->
+
+  <!-- Bloom layer (larger, blurred) -->
+  <path d="M 170 148 L 342 148
+           C 350 148, 356 154, 356 162
+           L 356 282
+           C 356 338, 300 373, 256 394
+           C 212 373, 156 338, 156 282
+           L 156 162
+           C 156 154, 162 148, 170 148 Z"
+    fill="url(#c-shield)" opacity="0.4"
+    filter="url(#c-shieldbloom)"/>
+
+  <!-- Shield main body -->
+  <path d="M 170 148 L 342 148
+           C 350 148, 356 154, 356 162
+           L 356 282
+           C 356 338, 300 373, 256 394
+           C 212 373, 156 338, 156 282
+           L 156 162
+           C 156 154, 162 148, 170 148 Z"
+    fill="url(#c-shield)"/>
+
+  <!-- Shield surface sheen -->
+  <path d="M 170 148 L 342 148
+           C 350 148, 356 154, 356 162
+           L 356 282
+           C 356 338, 300 373, 256 394
+           C 212 373, 156 338, 156 282
+           L 156 162
+           C 156 154, 162 148, 170 148 Z"
+    fill="url(#c-sheen)"/>
+
+  <!-- Shield border (crisp outline) -->
+  <path d="M 170 148 L 342 148
+           C 350 148, 356 154, 356 162
+           L 356 282
+           C 356 338, 300 373, 256 394
+           C 212 373, 156 338, 156 282
+           L 156 162
+           C 156 154, 162 148, 170 148 Z"
+    fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+
+  <!-- Heraldic horizontal divider (subtle) -->
+  <line x1="156" y1="204" x2="356" y2="204"
+    stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+  <!-- ── SIGMA MARK inside shield ── -->
+  <!-- Mark sits within shield interior; bottom points verified safe at y≈334 -->
+
+  <!-- Mark glow layer -->
+  <polyline points="194,180 318,180 208,258 318,336 194,336"
+    stroke="rgba(255,255,255,0.6)" stroke-width="28"
+    fill="none" stroke-linecap="round" stroke-linejoin="round"
+    filter="url(#c-markglow)"/>
+
+  <!-- Mark main -->
+  <polyline points="194,180 318,180 208,258 318,336 194,336"
+    stroke="rgba(255,255,255,0.96)" stroke-width="23"
+    fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Mark highlight on top bar + first diagonal -->
+  <polyline points="194,180 318,180 208,258"
+    stroke="rgba(255,255,255,0.45)" stroke-width="7"
+    fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+</svg>
