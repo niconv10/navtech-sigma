@@ -98,8 +98,27 @@ function SyncVisual() {
 }
 
 function GradeVisual() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="bg-white rounded-2xl shadow-glass-md border border-gray-100 p-6 w-full max-w-sm mx-auto hover:shadow-lg transition-shadow duration-300">
+    <div ref={ref} className="bg-white rounded-2xl shadow-glass-md border border-gray-100 p-6 w-full max-w-sm mx-auto hover:shadow-lg transition-shadow duration-300">
       <div className="flex items-center gap-2 mb-5">
         <div className="w-2 h-2 rounded-full bg-violet-500" />
         <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Grade Prediction</span>
@@ -110,7 +129,7 @@ function GradeVisual() {
           { grade: 'A', score: '78%', color: '#14B8A6', width: '78%' },
           { grade: 'B', score: '61%', color: '#7c3aed', width: '61%' },
           { grade: 'C', score: '44%', color: '#f59e0b', width: '44%' },
-        ].map(({ grade, score, color, width }) => (
+        ].map(({ grade, score, color, width }, i) => (
           <div key={grade}>
             <div className="flex justify-between text-xs mb-1">
               <span className="font-medium text-gray-600">To earn an {grade}</span>
@@ -118,8 +137,13 @@ function GradeVisual() {
             </div>
             <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
               <div
-                className="h-full rounded-full transition-all duration-700"
-                style={{ width, backgroundColor: color }}
+                className="h-full rounded-full"
+                style={{
+                  width: visible ? width : '0%',
+                  backgroundColor: color,
+                  transition: 'width 0.8s ease',
+                  transitionDelay: `${i * 0.15}s`,
+                }}
               />
             </div>
           </div>
@@ -190,6 +214,12 @@ export default function Landing() {
 
   return (
     <div className="bg-[#FAFAFA] text-[#1E293B] overflow-x-hidden">
+      <style>{`
+        @keyframes card-shimmer {
+          0%   { transform: translateX(-120%) rotate(25deg); }
+          100% { transform: translateX(320%) rotate(25deg); }
+        }
+      `}</style>
 
       {/* ── NAVBAR ────────────────────────────────────────────────────────── */}
       <header className={`sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-shadow duration-300 ${scrolled ? 'shadow-sm' : ''}`}>
@@ -233,6 +263,14 @@ export default function Landing() {
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section className="relative min-h-[92vh] flex flex-col items-center justify-center px-5 py-24 overflow-hidden text-center">
+        {/* Dot grid texture */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgba(30,41,59,0.04) 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
         {/* Background gradient orbs */}
         <div
           className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full pointer-events-none"
@@ -260,7 +298,7 @@ export default function Landing() {
         <div className="relative z-10 max-w-4xl mx-auto">
           {/* Eyebrow */}
           <div className="animate-fade-in inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#14B8A6]/10 border border-[#14B8A6]/25 text-[#0f9e8e] text-xs font-semibold mb-8 tracking-wide uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#14B8A6] inline-block" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#14B8A6] inline-block animate-pulse" />
             Designed for Florida College Students
           </div>
 
@@ -336,6 +374,7 @@ export default function Landing() {
                 icon: AlertCircle,
                 color: '#ef4444',
                 bg: 'rgba(239,68,68,0.07)',
+                accent: '#ef4444',
                 text: 'Missed a deadline because you forgot to check Canvas',
                 delay: 0,
               },
@@ -343,6 +382,7 @@ export default function Landing() {
                 icon: Calculator,
                 color: '#f59e0b',
                 bg: 'rgba(245,158,11,0.07)',
+                accent: '#f59e0b',
                 text: 'Calculated your grade wrong and panicked before finals',
                 delay: 100,
               },
@@ -350,12 +390,18 @@ export default function Landing() {
                 icon: Layers,
                 color: '#7c3aed',
                 bg: 'rgba(124,58,237,0.07)',
+                accent: '#7c3aed',
                 text: "Used your lunch break to figure out what's due this week instead of actually eating",
                 delay: 200,
               },
-            ].map(({ icon: Icon, color, bg, text, delay }) => (
+            ].map(({ icon: Icon, color, bg, accent, text, delay }) => (
               <FadeIn key={text} delay={delay}>
-                <div className="p-7 rounded-2xl bg-gray-50 border border-gray-100 h-full hover:scale-[1.02] transition-all duration-300 hover:shadow-glass-sm cursor-default">
+                <div className="relative p-7 rounded-2xl bg-gray-50 border border-gray-100 h-full hover:scale-[1.02] transition-all duration-300 hover:shadow-glass-sm cursor-default group overflow-hidden">
+                  {/* Left accent border — revealed on hover */}
+                  <div
+                    className="absolute left-0 top-0 bottom-0 w-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-l-2xl"
+                    style={{ backgroundColor: accent }}
+                  />
                   <div
                     className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
                     style={{ background: bg }}
@@ -620,6 +666,15 @@ export default function Landing() {
                 className="p-8 rounded-2xl border-2 h-full flex flex-col relative overflow-hidden hover:scale-[1.02] transition-all duration-300 hover:shadow-glass-sm"
                 style={{ borderColor: '#14B8A6', background: 'linear-gradient(160deg, rgba(20,184,166,0.04) 0%, white 50%)' }}
               >
+                {/* Shimmer sweep */}
+                <div
+                  className="absolute top-0 bottom-0 w-16 pointer-events-none"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent)',
+                    animation: 'card-shimmer 4s ease-in-out infinite',
+                    animationDelay: '1.5s',
+                  }}
+                />
                 {/* Popular badge */}
                 <div
                   className="absolute top-5 right-5 px-3 py-1 rounded-full text-white text-[11px] font-bold uppercase tracking-wider"
