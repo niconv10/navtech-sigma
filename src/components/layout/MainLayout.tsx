@@ -2,12 +2,15 @@ import { Sidebar } from "./Sidebar";
 import { MobileNav } from "./MobileNav";
 import { DisclaimerBanner } from "@/components/DisclaimerBanner";
 import { cn } from "@/lib/utils";
+import { useSemesters } from "@/hooks/useSemesters";
 
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
+  useSemesters();
+
   return (
     <div
       className="min-h-screen bg-background"

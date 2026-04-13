@@ -55,7 +55,7 @@ serve(async (req) => {
       });
     }
 
-    console.log("Parsing syllabus:", hasPdf ? `PDF file: ${fileName}` : `Text length: ${syllabusText?.length}`);
+    console.log("Parsing syllabus:", hasPdf ? `PDF file: ${fileName}, base64 length: ${pdfBase64?.length}` : `Text length: ${syllabusText?.length}`);
 
     const systemPrompt = `You are an expert academic syllabus parser for SIGMA, a college grade tracking and academic intelligence app. Your job is to extract EVERY piece of relevant information from course syllabi with EXTREME ACCURACY and COMPREHENSIVENESS.
 
@@ -814,6 +814,7 @@ Return ONLY the JSON object, nothing else.`;
       headers: {
         "x-api-key": ANTHROPIC_API_KEY,
         "anthropic-version": "2023-06-01",
+        "anthropic-beta": "pdfs-2024-09-25",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -827,7 +828,7 @@ Return ONLY the JSON object, nothing else.`;
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Anthropic API error:", response.status, errorText);
+      console.error(`Anthropic API error — status: ${response.status}, body: ${errorText}`);
 
       if (response.status === 429) {
         return new Response(JSON.stringify({ error: "Rate limits exceeded, please try again later." }), {
@@ -836,16 +837,25 @@ Return ONLY the JSON object, nothing else.`;
         });
       }
 
-      throw new Error("Failed to parse syllabus with AI");
+      // Surface the actual Anthropic error so the client can see what went wrong
+      let anthropicMessage = `Anthropic API returned ${response.status}`;
+      try {
+        const parsed = JSON.parse(errorText);
+        if (parsed?.error?.message) anthropicMessage = parsed.error.message;
+      } catch { /* errorText wasn't JSON */ }
+
+      throw new Error(anthropicMessage);
     }
 
     const aiResponse = await response.json();
+    console.log("Anthropic response — stop_reason:", aiResponse.stop_reason, "model:", aiResponse.model);
+
     // Anthropic Messages API response: { content: [{ type: "text", text: "..." }], ... }
     const content = aiResponse.content?.[0]?.text;
 
     if (!content) {
       console.error("Empty AI response:", JSON.stringify(aiResponse));
-      throw new Error("AI returned empty response");
+      throw new Error(`AI returned no content (stop_reason: ${aiResponse.stop_reason ?? "unknown"})`);
     }
 
     console.log("AI response received, parsing JSON...");
@@ -881,9 +891,11 @@ Return ONLY the JSON object, nothing else.`;
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error in parse-syllabus function:", error);
+    const message = error instanceof Error ? error.message : String(error);
+    const stack   = error instanceof Error ? error.stack  : undefined;
+    console.error("Error in parse-syllabus function:", message, stack ?? "");
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : "Failed to parse syllabus" }),
+      JSON.stringify({ error: message }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   }

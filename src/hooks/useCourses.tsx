@@ -28,7 +28,7 @@ export function useCourses() {
   // Do not include `courses` in this hook's local state — read it from the
   // store directly inside the callback to avoid a stale-closure / infinite-
   // re-render cycle (courses changes → new fetchCourses → effect re-runs).
-  const { addCourse, reset } = useSemesterStore();
+  const { setCourses } = useSemesterStore();
 
   // Fetch courses and assignments from database
   const fetchCourses = useCallback(async () => {
@@ -51,7 +51,7 @@ export function useCourses() {
 
       if (!dbCourses || dbCourses.length === 0) {
         // No courses in the database yet — clear any persisted/demo courses
-        if (currentCourses.length > 0) reset();
+        if (currentCourses.length > 0) setCourses([]);
         return;
       }
 
@@ -136,13 +136,12 @@ export function useCourses() {
       const nextSig = signature(mappedCourses);
 
       if (existingSig !== nextSig) {
-        reset();
-        mappedCourses.forEach((course) => addCourse(course));
+        setCourses(mappedCourses);
       }
     } catch (err) {
       console.error('Error in fetchCourses:', err);
     }
-  }, [user, addCourse, reset]);
+  }, [user, setCourses]);
 
   // Fetch on mount and when user changes
   useEffect(() => {
@@ -200,7 +199,7 @@ export async function saveCourseToDatabase(
         name: courseData.name,
         credits: courseData.credits,
         color: courseData.color,
-        semester_id: null,
+        semester_id: courseData.semesterId || null,
         section: courseData.section || null,
         crn: courseData.crn || null,
         institution: courseData.institution || null,

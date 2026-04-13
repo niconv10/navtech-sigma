@@ -13,10 +13,12 @@ interface SemesterStore {
 
   // Semester actions
   addSemester: (semester: Semester) => void;
+  setSemesters: (semesters: Semester[]) => void;
   setActiveSemester: (id: string) => void;
-  
+
   // Course actions
   addCourse: (course: Course) => void;
+  setCourses: (courses: Course[]) => void;
   updateCourse: (id: string, updates: Partial<Course>) => void;
   deleteCourse: (id: string) => void;
   
@@ -86,6 +88,9 @@ export const useSemesterStore = create<SemesterStore>()(
           semesters: [...state.semesters, semester],
         })),
 
+      setSemesters: (semesters) =>
+        set(() => ({ semesters })),
+
       setActiveSemester: (id) =>
         set((state) => ({
           activeSemesterId: id,
@@ -99,6 +104,9 @@ export const useSemesterStore = create<SemesterStore>()(
         set((state) => ({
           courses: [...state.courses, course],
         })),
+
+      setCourses: (courses) =>
+        set(() => ({ courses })),
 
       updateCourse: (id, updates) =>
         set((state) => ({

@@ -177,3 +177,29 @@ App is 90% wired to real data. Much more complete than expected.
 2. Test syllabus upload flow
 3. Fix Insights hardcoded data
 4. Commit and push all changes
+
+## Session 3 (continued) — April 13, 2026
+
+**Focus:** Syllabus upload fix, Edge Functions deployment
+
+### Actions Completed
+- [x] Claude Code found and fixed 2 bugs (semester_id hardcoded null, PDF beta header)
+- [x] Claude Code fixed root cause: fake semester IDs replaced with real Supabase UUIDs
+- [x] Created useSemesters hook (new file)
+- [x] Installed Homebrew on Mac
+- [x] Installed Supabase CLI
+- [x] Linked Supabase project
+- [x] Deployed 3 Edge Functions (parse-syllabus, ai-advisor, send-email)
+- [x] Set ANTHROPIC_API_KEY as Supabase secret
+- [x] Added error logging to parse-syllabus function
+- [x] FIRST REAL SYLLABUS PARSED SUCCESSFULLY
+
+### Milestone Reached
+SIGMA can now: signup → login → upload syllabus → parse with AI → show course data.
+The core flow works end-to-end. This is a functional product.
+
+### Next Steps
+1. UI/UX polish and design improvements
+2. Test with more syllabi
+3. Calendar view with real deadlines
+4. Commit all changes and push to GitHub
