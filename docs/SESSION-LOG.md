@@ -138,3 +138,20 @@ After each working session on SIGMA:
 5. List next session goals
 
 This is your accountability partner and your pitch deck material.
+
+### Additional Actions — End of Session 2
+
+- [x] Created GAP-ANALYSIS.md (47 items, 10 blockers, 6 categories)
+- [x] Created MASTER-PLAN.md (5 phases, 18 weeks, 60+ tasks with checkboxes)
+- [x] Created SESSION-LOG.md (documenting all decisions and actions)
+- [x] Updated README.md with project doc links table
+- [x] All docs pushed to GitHub and verified rendering
+- [x] Confirmed checkboxes work interactively in GitHub browser
+
+### Next Session Goals (Session 3)
+
+1. Run Supabase migrations (create database tables)
+2. Make login/signup functional
+3. Full app audit — navigate every page, document what works
+4. Install Claude Code CLI
+5. Create GitHub Projects board (Kanban)
