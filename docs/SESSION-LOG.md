@@ -227,3 +227,32 @@ The core flow works end-to-end. This is a functional product.
 - [ ] Register LLC (deferred to July)
 - [ ] Reserve Instagram handle
 - [ ] Create Claude Projects (4 departments)
+
+## Session 4 — April 13, 2026
+
+**Duration:** ~3 hours
+**Focus:** Deployment, domain setup, continued infrastructure
+
+### Actions Completed
+- [x] Deployed SIGMA to Vercel — live at navtech-sigma.vercel.app
+- [x] Connected yoursigma.ai domain to Vercel (SSL generating)
+- [x] Configured DNS records in Spaceship (A record + CNAME)
+- [x] Environment variables configured in Vercel (Supabase URL + Key)
+- [x] Installed Homebrew on Mac
+- [x] Installed Supabase CLI
+- [x] Created Vercel account connected to GitHub
+
+### Milestone
+SIGMA IS LIVE ON THE INTERNET. Accessible from any device worldwide.
+
+### URLs
+- Production: https://navtech-sigma.vercel.app
+- Custom domain: https://yoursigma.ai (SSL pending)
+- GitHub: https://github.com/niconv10/navtech-sigma
+- Supabase: https://supabase.com/dashboard/project/cmsedaghboihcfzitefh
+
+### Phase 0: COMPLETE ✅
+All critical Phase 0 items done. App is deployed, auth works, database connected, syllabus parser functional.
+
+### Remaining Time Today
+2-3 hours available for Phase 1 work.
