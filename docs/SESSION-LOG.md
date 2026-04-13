@@ -203,3 +203,27 @@ The core flow works end-to-end. This is a functional product.
 2. Test with more syllabi
 3. Calendar view with real deadlines
 4. Commit all changes and push to GitHub
+
+## Session 3 Final — April 13, 2026
+
+### Additional Actions
+- [x] FAU OIT ticket submitted (#23917117) for Canvas API Developer Key
+- [x] Discovered FAU blocks personal Canvas access tokens for students
+- [x] GitHub Projects board "SIGMA Development" created with 7 initial tasks
+- [x] Homebrew installed on Mac
+- [x] Supabase CLI installed and linked to project
+- [x] 3 Edge Functions deployed (parse-syllabus, ai-advisor, send-email)
+- [x] ANTHROPIC_API_KEY configured as Supabase secret
+- [x] Domain confirmed: yoursigma.ai
+
+### Phase 0 Status: 90% COMPLETE
+- [x] Supabase schema
+- [x] Auth functional
+- [x] Claude Code installed
+- [x] App audit done
+- [x] Syllabus parser working
+- [x] GitHub Projects board
+- [x] FAU OIT ticket submitted
+- [ ] Register LLC (deferred to July)
+- [ ] Reserve Instagram handle
+- [ ] Create Claude Projects (4 departments)
