@@ -26,20 +26,20 @@ August   ░░░░░░░░░░░░░░░░░░██  Phase 4: 
 ### Week 1 (April 14-20) — Infrastructure & Organization
 
 - [ ] Create 4 Claude Projects with system prompts (30 min)
-- [ ] Create GitHub Projects board in repo (15 min)
-- [ ] Run Supabase migrations (configure database schema) (1 hr) `CRITICAL`
-- [ ] Make Auth work (signup/login) (1.5 hrs) `CRITICAL`
-- [ ] Navigate entire app, document what works vs broken (1 hr) `CRITICAL`
-- [ ] Buy domain navtech.dev or sigma-app.com (15 min)
-- [ ] Install Claude Code CLI (10 min)
+- [x] Create GitHub Projects board in repo (15 min)
+- [x] Run Supabase migrations (configure database schema) (1 hr) `CRITICAL`
+- [x] Make Auth work (signup/login) (1.5 hrs) `CRITICAL`
+- [x] Navigate entire app, document what works vs broken (1 hr) `CRITICAL`
+- [x] Buy domain navtech.dev or sigma-app.com (15 min)
+- [x] Install Claude Code CLI (10 min)
 
 ### Week 2 (April 21-27) — Auth + First Real Data
 
-- [ ] Login/Signup functional end-to-end (2 hrs) `CRITICAL`
-- [ ] Upload first real syllabus as test (1 hr) `CRITICAL`
-- [ ] Dashboard shows real data from Supabase, not mock data (2 hrs)
+- [x] Login/Signup functional end-to-end (2 hrs) `CRITICAL`
+- [x] Upload first real syllabus as test (1 hr) `CRITICAL`
+- [x] Dashboard shows real data from Supabase, not mock data (2 hrs)
 - [ ] Register NavTech LLC on Sunbiz.org — $125 (30 min)
-- [ ] Email FAU OIT about Canvas API Developer Key (20 min)
+- [x] Email FAU OIT about Canvas API Developer Key (20 min)
 - [ ] Write Weekly Update #1 in docs/weekly-updates/2026-W17.md (15 min)
 
 **Checkpoint:** Can a user signup, login, and see a dashboard? If yes → Phase 1.
@@ -90,7 +90,7 @@ August   ░░░░░░░░░░░░░░░░░░██  Phase 4: 
 
 - [ ] Bug fix sprint — resolve all accumulated issues (4 hrs)
 - [ ] Onboarding flow: first-time user experience in < 3 min (3 hrs) `CRITICAL`
-- [ ] Deploy to Vercel (production) with custom domain (1 hr) `CRITICAL`
+- [x] Deploy to Vercel (production) with custom domain (1 hr) `CRITICAL`
 - [ ] Performance audit: Lighthouse score > 80 all categories (1 hr)
 - [ ] Create Instagram @sigma.app — bio, logo, 3 initial posts (30 min)
 - [ ] Prepare beta invite email/message template (30 min)

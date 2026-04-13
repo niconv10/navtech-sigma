@@ -21,24 +21,24 @@
 
 ## 🔴 BLOCKERS — Must resolve before launch
 
-- [ ] Supabase schema (run migrations)
-- [ ] Auth functional (signup → login → session)
+- [x] Supabase schema (run migrations)
+- [x] Auth functional (signup → login → session)
 - [ ] Syllabus parser tested with real syllabi
 - [ ] Canvas API integration (OAuth2 or manual token)
 - [ ] FERPA compliance implemented
-- [ ] Row Level Security on ALL tables
+- [x] Row Level Security on ALL tables
 - [ ] NavTech LLC registered in Florida
 - [ ] Privacy Policy (real, not placeholder)
 - [ ] Terms of Service (real, not placeholder)
-- [ ] Full app audit (what works vs what's placeholder)
+- [x] Full app audit (what works vs what's placeholder)
 
 ---
 
 ## ⚙️ Technical / Engineering
 
 ### Phase 0 (This week)
-- [ ] **Supabase schema** — Run existing migrations in /supabase/migrations/ on new Supabase project. Without tables, nothing works. `BLOCKER`
-- [ ] **Auth functional** — Signup → confirm email → login → see dashboard. If this doesn't work, nothing else matters. `BLOCKER`
+- [x] **Supabase schema** — Run existing migrations in /supabase/migrations/ on new Supabase project. Without tables, nothing works. `BLOCKER`
+- [x] **Auth functional** — Signup → confirm email → login → see dashboard. If this doesn't work, nothing else matters. `BLOCKER`
 - [ ] **CI/CD pipeline** — GitHub Actions: lint + test on PR, auto-deploy to Vercel on merge to main. 1 hour setup.
 
 ### Phase 1 (May)
@@ -62,11 +62,11 @@
 ## 🔒 Security & Compliance
 
 ### Phase 0
-- [ ] **Row Level Security (RLS)** — Verify EVERY table has RLS enabled with user_id policies. One user must NEVER see another's data. `BLOCKER`
+- [x] **Row Level Security (RLS)** — Verify EVERY table has RLS enabled with user_id policies. One user must NEVER see another's data. `BLOCKER`
 
 ### Phase 1
 - [ ] **FERPA compliance** — Explicit consent at signup, encrypted grades in DB, right to delete, Privacy Policy mentions FERPA. `BLOCKER`
-- [ ] **Dependency scanning** — Enable GitHub Dependabot alerts. 15 min setup. Repo → Settings → Security → Enable.
+- [x] **Dependency scanning** — Enable GitHub Dependabot alerts. 15 min setup. Repo → Settings → Security → Enable.
 
 ### Phase 2
 - [ ] **Canvas tokens encrypted in DB** — If database is compromised, Canvas tokens must still be safe. Use pgcrypto or app-level encryption.
@@ -100,7 +100,7 @@
 ## ✦ Product & UX
 
 ### Phase 0
-- [ ] **Full app audit** — Navigate every page. Document what works vs what's placeholder. This determines our real starting point. `BLOCKER`
+- [x] **Full app audit** — Navigate every page. Document what works vs what's placeholder. This determines our real starting point. `BLOCKER`
 
 ### Phase 1
 - [ ] **Onboarding flow** — Signup → value in under 3 minutes. If a student takes longer to see their first deadline, we lose them.
@@ -140,9 +140,9 @@
 
 ### Phase 0
 - [ ] **Claude Projects configured** — 4 projects: SIGMA-Engineering, SIGMA-Product, SIGMA-Marketing, SIGMA-Finance. System prompts documented in docs/claude-projects.md
-- [ ] **GitHub Projects board** — Kanban board: Backlog → In Progress → Review → Done. All tasks from all departments live here.
-- [ ] **Claude Code CLI installed** — `npm install -g @anthropic-ai/claude-code`. Your CTO virtual.
-- [ ] **Weekly update cadence** — Every Saturday. Template in docs/weekly-updates/template.md
+- [x] **GitHub Projects board** — Kanban board: Backlog → In Progress → Review → Done. All tasks from all departments live here.
+- [x] **Claude Code CLI installed** — `npm install -g @anthropic-ai/claude-code`. Your CTO virtual.
+- [x] **Weekly update cadence** — Every Saturday. Template in docs/weekly-updates/template.md
 
 ### Phase 3
 - [ ] **Incident response plan** — What to do when the app goes down at 2am. Documented checklist.
