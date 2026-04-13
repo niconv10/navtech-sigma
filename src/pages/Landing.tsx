@@ -1,478 +1,729 @@
-import { useState } from 'react';
-import graduationHero from '@/assets/graduation-hero.jpg';
-import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, ChevronDown, TrendingUp, Plus } from 'lucide-react';
+import { useRef, useEffect, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import {
+  ArrowRight,
+  RefreshCw,
+  Brain,
+  LayoutDashboard,
+  FileText,
+  Link2,
+  Rocket,
+  Check,
+  AlertCircle,
+  Calculator,
+  Layers,
+} from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { Navigate } from 'react-router-dom';
 import { Logo } from '@/components/Logo';
 
+// ─── Scroll-reveal wrapper ──────────────────────────────────────────────────
+function FadeIn({
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'opacity 0.65s ease, transform 0.65s ease',
+        transitionDelay: `${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ─── Feature visual cards (CSS-only, no images) ─────────────────────────────
+function SyncVisual() {
+  return (
+    <div className="bg-white rounded-2xl shadow-glass-md border border-gray-100 p-6 w-full max-w-sm mx-auto hover:shadow-lg transition-shadow duration-300">
+      <div className="flex items-center gap-2 mb-5">
+        <div className="w-2 h-2 rounded-full bg-[#14B8A6]" />
+        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Canvas Sync</span>
+      </div>
+      <div className="space-y-3">
+        {['COP 3530 · Data Structures', 'MAC 2312 · Calculus II', 'PHY 2048 · Physics I'].map(
+          (course, i) => (
+            <div
+              key={course}
+              className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-100"
+              style={{
+                opacity: 1,
+                animation: `fadeSlide 0.4s ease ${i * 0.1 + 0.2}s both`,
+              }}
+            >
+              <span className="text-sm font-medium text-[#1E293B]">{course}</span>
+              <div className="flex items-center gap-1.5 text-[#14B8A6]">
+                <Check className="w-4 h-4" />
+                <span className="text-xs font-semibold">Synced</span>
+              </div>
+            </div>
+          ),
+        )}
+      </div>
+      <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+        <span className="text-xs text-gray-400">Last synced 2 min ago</span>
+        <RefreshCw className="w-3.5 h-3.5 text-[#14B8A6]" />
+      </div>
+    </div>
+  );
+}
+
+function GradeVisual() {
+  return (
+    <div className="bg-white rounded-2xl shadow-glass-md border border-gray-100 p-6 w-full max-w-sm mx-auto hover:shadow-lg transition-shadow duration-300">
+      <div className="flex items-center gap-2 mb-5">
+        <div className="w-2 h-2 rounded-full bg-violet-500" />
+        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Grade Prediction</span>
+      </div>
+      <p className="text-xs text-gray-400 mb-3">What do you need on the final?</p>
+      <div className="space-y-2.5">
+        {[
+          { grade: 'A', score: '78%', color: '#14B8A6', width: '78%' },
+          { grade: 'B', score: '61%', color: '#7c3aed', width: '61%' },
+          { grade: 'C', score: '44%', color: '#f59e0b', width: '44%' },
+        ].map(({ grade, score, color, width }) => (
+          <div key={grade}>
+            <div className="flex justify-between text-xs mb-1">
+              <span className="font-medium text-gray-600">To earn an {grade}</span>
+              <span className="font-bold" style={{ color }}>{score}</span>
+            </div>
+            <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-700"
+                style={{ width, backgroundColor: color }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 pt-4 border-t border-gray-100 text-center">
+        <span className="text-xs text-gray-400">Current grade: </span>
+        <span className="text-xs font-bold text-[#14B8A6]">84.2% · B</span>
+      </div>
+    </div>
+  );
+}
+
+function DashboardVisual() {
+  return (
+    <div className="bg-white rounded-2xl shadow-glass-md border border-gray-100 p-6 w-full max-w-sm mx-auto hover:shadow-lg transition-shadow duration-300">
+      <div className="flex items-center gap-2 mb-5">
+        <div className="w-2 h-2 rounded-full bg-amber-400" />
+        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Today's Overview</span>
+      </div>
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="p-3 rounded-xl bg-[#14B8A6]/8 border border-[#14B8A6]/20">
+          <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">GPA</p>
+          <p className="text-xl font-bold text-[#1E293B]">3.72</p>
+        </div>
+        <div className="p-3 rounded-xl bg-violet-50 border border-violet-100">
+          <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Due Soon</p>
+          <p className="text-xl font-bold text-[#1E293B]">3</p>
+        </div>
+      </div>
+      <div className="space-y-2">
+        {[
+          { dot: '#14B8A6', label: 'COP Essay', time: 'Today, 11:59 PM' },
+          { dot: '#7c3aed', label: 'MAC Quiz 4', time: 'Tomorrow, 9 AM' },
+          { dot: '#f59e0b', label: 'PHY Lab Report', time: 'Friday, 5 PM' },
+        ].map(({ dot, label, time }) => (
+          <div key={label} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50">
+            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: dot }} />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-[#1E293B] truncate">{label}</p>
+              <p className="text-[11px] text-gray-400">{time}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Main component ─────────────────────────────────────────────────────────
 export default function Landing() {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  const [query, setQuery] = useState('');
+  const [scrolled, setScrolled] = useState(false);
 
-  // Redirect authenticated users to dashboard
-  if (user && !loading) {
-    return <Navigate to="/dashboard" replace />;
-  }
+  // Smooth scroll + navbar shadow on scroll
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = 'smooth';
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      document.documentElement.style.scrollBehavior = '';
+    };
+  }, []);
+
+  if (user && !loading) return <Navigate to="/dashboard" replace />;
 
   return (
-    <div className="relative">
-      
-      {/* ═══════════════════════════════════════════════════════ */}
-      {/* HERO SECTION - Full viewport with sky background */}
-      {/* ═══════════════════════════════════════════════════════ */}
-      
-      <section className="min-h-screen relative overflow-hidden">
-        {/* Background - Building sky photo with overlay and bottom transition */}
-        <div className="absolute inset-0 -z-10">
-          <img
-            src={graduationHero}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: 'center 70%' }}
-          />
-          {/* Light overlay for text readability */}
-          <div className="absolute inset-0 bg-black/20" />
-          {/* Bottom gradient transition to dark section */}
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-[#0a0a0a]" />
-        </div>
+    <div className="bg-[#FAFAFA] text-[#1E293B] overflow-x-hidden">
 
-        {/* Navigation */}
-        <nav className="relative z-10 flex items-center justify-between px-6 md:px-12 py-6">
-          <Logo variant="dark" height={48} linkTo="/" />
-          
-          <div className="flex items-center gap-3">
+      {/* ── NAVBAR ────────────────────────────────────────────────────────── */}
+      <header className={`sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-shadow duration-300 ${scrolled ? 'shadow-sm' : ''}`}>
+        <nav className="max-w-6xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
+          <Logo variant="light" height={34} linkTo="/" />
+
+          {/* Anchor links — desktop */}
+          <div className="hidden md:flex items-center gap-7">
+            {[
+              { label: 'Features', href: '#features' },
+              { label: 'How It Works', href: '#how-it-works' },
+              { label: 'Pricing', href: '#pricing' },
+            ].map(({ label, href }) => (
+              <a
+                key={href}
+                href={href}
+                className="text-sm font-medium text-gray-500 hover:text-[#1E293B] transition-colors"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2">
             <button
               onClick={() => navigate('/login')}
-              className="text-white/80 hover:text-white transition font-medium px-4 py-2 text-sm"
+              className="hidden sm:block px-4 py-2 text-sm font-medium text-gray-500 hover:text-[#1E293B] transition-colors"
             >
-              Sign In
+              Log In
             </button>
             <button
               onClick={() => navigate('/signup')}
-              className="px-5 py-2.5 bg-white text-slate-900 rounded-full font-semibold text-sm hover:bg-white/90 transition"
+              className="flex items-center gap-1.5 px-4 py-2.5 bg-[#14B8A6] text-white text-sm font-semibold rounded-xl hover:bg-[#0f9e8e] transition-colors"
             >
               Get Started
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </nav>
-        
-        {/* Hero Content */}
-        <main className="relative z-10 flex flex-col items-center justify-start pt-16 md:pt-24 min-h-[calc(100vh-88px)] px-6 py-12 text-center">
-          <div className="mb-8 animate-fade-in">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm font-medium">
-              <Sparkles className="h-4 w-4 text-amber-400" />
-              AI-Powered Grade Tracking
-            </span>
-          </div>
-          
-          <h1 className="mb-8 text-5xl md:text-7xl lg:text-8xl text-white leading-tight animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            <span className="font-playfair italic font-normal">Own</span>{' '}
-            <span className="font-playfair font-normal">your grades.</span>
-          </h1>
-          
-          <p className="max-w-2xl mb-10 text-lg md:text-xl text-white/70 leading-relaxed animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            SIGMA is your personal AI academic assistant.
-            <br className="hidden md:block" />
-            Track your GPA, predict your future, and stay on top of every assignment—effortlessly.
-          </p>
-          
-          <button
-            onClick={() => navigate('/signup')}
-            className="group mb-14 px-8 py-4 bg-white text-slate-900 rounded-full font-semibold text-sm uppercase tracking-wider hover:bg-white/90 transition-all flex items-center gap-3 animate-fade-in"
-            style={{ animationDelay: '0.3s' }}
-          >
-            Get Started
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-          
-          <div className="w-full max-w-xl mb-8 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <div className="relative">
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder='Try: "What do I need on my final to get a B?"'
-                className="w-full px-6 py-4 pr-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    navigate('/signup');
-                  }
-                }}
-              />
-              <button 
-                onClick={() => navigate('/signup')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition"
-              >
-                <Sparkles className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-          
-          <p className="text-white/50 text-sm tracking-widest uppercase mb-12 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-            Track everything. Know everything.
-          </p>
+      </header>
 
-          {/* Scroll indicator */}
-          <div className="animate-bounce">
-            <ChevronDown className="h-6 w-6 text-white/40" />
-          </div>
-        </main>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════ */}
-      {/* IPHONE MOCKUP SECTION - Dark background */}
-      {/* ═══════════════════════════════════════════════════════ */}
-      
-      <section className="relative min-h-screen bg-[#0a0a0a] overflow-hidden py-24 md:py-32">
-        {/* Headline */}
-        <div className="text-center mb-8 md:mb-12 px-6">
-          <h2 className="text-5xl md:text-7xl lg:text-8xl text-white leading-tight">
-            <span className="font-playfair italic font-normal">Take</span>{' '}
-            <span className="font-playfair font-normal">control of your grades.</span>
-          </h2>
-        </div>
-
-        {/* iPhone Mockup Container - with perspective wrapper */}
-        <div 
-          className="relative flex items-center justify-center px-6 pt-8"
+      {/* ── HERO ──────────────────────────────────────────────────────────── */}
+      <section className="relative min-h-[92vh] flex flex-col items-center justify-center px-5 py-24 overflow-hidden text-center">
+        {/* Background gradient orbs */}
+        <div
+          className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full pointer-events-none"
           style={{
-            perspective: '2000px',
-            perspectiveOrigin: 'center 40%'
+            background: 'radial-gradient(ellipse, rgba(20,184,166,0.12) 0%, transparent 65%)',
           }}
-        >
-          {/* Soft shadow under phone - like it's laying on a surface */}
-          <div 
-            className="absolute w-[700px] h-[400px] md:w-[1000px] md:h-[500px] bg-black/50 blur-[80px] rounded-[50%]"
-            style={{
-              transform: 'translateY(150px)',
-            }}
-          />
-          
-          {/* iPhone Frame with horizontal laying-flat perspective */}
-          <div 
-            className="relative z-10"
-            style={{
-              transform: 'rotateX(65deg) rotateY(-5deg) rotateZ(-2deg)',
-              transformStyle: 'preserve-3d',
-            }}
-          >
-            {/* 3D Phone wrapper with depth */}
-            <div 
-              className="relative"
-              style={{
-                transformStyle: 'preserve-3d',
-              }}
-            >
-              {/* Phone outer frame - titanium look with 3D depth */}
-              <div 
-                className="relative w-[380px] md:w-[480px] lg:w-[540px] rounded-[50px] md:rounded-[60px] p-3"
-                style={{
-                  background: 'linear-gradient(180deg, #4a4a4c 0%, #2c2c2e 20%, #1c1c1e 80%, #0c0c0e 100%)',
-                  boxShadow: '0 80px 150px -30px rgba(0,0,0,0.9), 0 40px 80px -20px rgba(0,0,0,0.8)',
-                  transformStyle: 'preserve-3d',
-                }}
-              >
-                {/* Frame edge highlight - top edge reflection */}
-                <div 
-                  className="absolute inset-x-0 top-0 h-[3px] rounded-t-[50px] md:rounded-t-[60px]"
-                  style={{
-                    background: 'linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.2) 70%, rgba(255,255,255,0.05) 100%)',
-                  }}
-                />
-                
-                {/* Side frame depth - left edge */}
-                <div 
-                  className="absolute left-0 top-[50px] bottom-[50px] w-[4px]"
-                  style={{
-                    background: 'linear-gradient(180deg, #5a5a5c 0%, #3a3a3c 50%, #2a2a2c 100%)',
-                    transform: 'translateZ(-4px) rotateY(-90deg)',
-                    transformOrigin: 'right center',
-                  }}
-                />
-                
-                {/* Side frame depth - right edge */}
-                <div 
-                  className="absolute right-0 top-[50px] bottom-[50px] w-[4px]"
-                  style={{
-                    background: 'linear-gradient(180deg, #3a3a3c 0%, #2a2a2c 50%, #1a1a1c 100%)',
-                    transform: 'translateZ(-4px) rotateY(90deg)',
-                    transformOrigin: 'left center',
-                  }}
-                />
-                
-                {/* Side buttons - Volume (left side) */}
-                <div className="absolute -left-[5px] top-[80px] w-[5px] h-[30px] bg-gradient-to-b from-[#4a4a4c] to-[#2a2a2c] rounded-l-sm" />
-                <div className="absolute -left-[5px] top-[120px] w-[5px] h-[50px] bg-gradient-to-b from-[#4a4a4c] to-[#2a2a2c] rounded-l-sm" />
-                <div className="absolute -left-[5px] top-[180px] w-[5px] h-[50px] bg-gradient-to-b from-[#4a4a4c] to-[#2a2a2c] rounded-l-sm" />
-                {/* Side button - Power (right side) */}
-                <div className="absolute -right-[5px] top-[140px] w-[5px] h-[70px] bg-gradient-to-b from-[#3a3a3c] to-[#1a1a1c] rounded-r-sm" />
-                
-                {/* Inner screen bezel */}
-                <div className="bg-black rounded-[42px] md:rounded-[52px] overflow-hidden border border-[#2a2a2a]">
-                  {/* Dynamic Island */}
-                  <div className="relative h-9 flex items-center justify-center bg-black">
-                    <div className="w-[110px] h-[32px] bg-black rounded-full flex items-center justify-center gap-3">
-                      {/* Front camera */}
-                      <div className="w-3 h-3 rounded-full bg-[#1a1a1a] flex items-center justify-center">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#0d3b66]/80" />
-                      </div>
-                      {/* Face ID sensors */}
-                      <div className="w-2 h-2 rounded-full bg-[#1a1a1a]" />
-                    </div>
-                  </div>
-                  
-                  {/* Screen Content - SIGMA Dashboard */}
-                  <div className="bg-gradient-to-b from-[#0f0f0f] to-[#0a0a0a] px-5 pb-6 min-h-[480px] md:min-h-[600px] lg:min-h-[680px]">
-                    {/* Status bar */}
-                    <div className="flex items-center justify-between text-[10px] text-white/60 mb-4 pt-1">
-                      <span className="font-medium">9:40</span>
-                      <div className="flex items-center gap-1">
-                        <div className="flex gap-[2px]">
-                          <div className="w-[3px] h-[6px] bg-white/60 rounded-sm" />
-                          <div className="w-[3px] h-[8px] bg-white/60 rounded-sm" />
-                          <div className="w-[3px] h-[10px] bg-white/60 rounded-sm" />
-                          <div className="w-[3px] h-[12px] bg-white/40 rounded-sm" />
-                        </div>
-                        <span className="ml-1">100%</span>
-                      </div>
-                    </div>
-                    
-                    {/* App Header */}
-                    <div className="flex items-center justify-between mb-5">
-                      <div>
-                        <p className="text-white/60 text-[11px]">Good morning</p>
-                        <p className="text-white font-semibold text-base">Dashboard</p>
-                      </div>
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                        <span className="text-white text-[11px] font-bold">JD</span>
-                      </div>
-                    </div>
-                    
-                    {/* GPA Card with chart line like reference */}
-                    <div className="bg-[#1a1a1a] rounded-2xl p-4 mb-4 border border-white/5">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-white/50 text-xs uppercase tracking-wider">Current GPA</span>
-                        <div className="flex items-center gap-1 text-emerald-400 text-[11px]">
-                          <TrendingUp className="h-3 w-3" />
-                          <span>+5.8%</span>
-                        </div>
-                      </div>
-                      <div className="flex items-end gap-2 mb-4">
-                        <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">3.85</span>
-                        <span className="text-white/30 text-sm mb-1">/ 4.00</span>
-                      </div>
-                      {/* Line chart like reference */}
-                      <div className="h-16 relative">
-                        <svg className="w-full h-full" viewBox="0 0 200 50" preserveAspectRatio="none">
-                          <defs>
-                            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" stopColor="#3b82f6" />
-                              <stop offset="100%" stopColor="#22d3ee" />
-                            </linearGradient>
-                            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
-                              <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
-                            </linearGradient>
-                          </defs>
-                          <path
-                            d="M0,40 Q20,38 40,35 T80,30 T120,25 T160,15 T200,10"
-                            fill="none"
-                            stroke="url(#lineGradient)"
-                            strokeWidth="2"
-                          />
-                          <path
-                            d="M0,40 Q20,38 40,35 T80,30 T120,25 T160,15 T200,10 L200,50 L0,50 Z"
-                            fill="url(#areaGradient)"
-                          />
-                        </svg>
-                        {/* Time labels */}
-                        <div className="absolute bottom-0 left-0 right-0 flex justify-between text-[9px] text-white/30">
-                          <span>1W</span>
-                          <span>1M</span>
-                          <span>3M</span>
-                          <span>YTD</span>
-                          <span>ALL</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Quick Stats */}
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      <div className="bg-[#1a1a1a] rounded-xl p-3 border border-white/5">
-                        <p className="text-white/40 text-[10px] mb-1">Assignments</p>
-                        <p className="text-white font-semibold text-base">12/15</p>
-                      </div>
-                      <div className="bg-[#1a1a1a] rounded-xl p-3 border border-white/5">
-                        <p className="text-white/40 text-[10px] mb-1">Due This Week</p>
-                        <p className="text-white font-semibold text-base">3</p>
-                      </div>
-                    </div>
-                    
-                    {/* Course List */}
-                    <div className="space-y-2">
-                      <p className="text-white/40 text-[10px] uppercase tracking-wider mb-2">Courses</p>
-                      
-                      <div className="flex items-center justify-between bg-[#1a1a1a] rounded-xl p-3 border border-white/5">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                            <span className="text-purple-400 text-[10px] font-bold">CS</span>
-                          </div>
-                          <div>
-                            <p className="text-white text-sm font-medium">COP 3530</p>
-                            <p className="text-white/30 text-[9px]">Data Structures</p>
-                          </div>
-                        </div>
-                        <span className="text-emerald-400 font-bold text-sm">A</span>
-                      </div>
-                      
-                      <div className="flex items-center justify-between bg-[#1a1a1a] rounded-xl p-3 border border-white/5">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                            <span className="text-blue-400 text-[10px] font-bold">MA</span>
-                          </div>
-                          <div>
-                            <p className="text-white text-sm font-medium">MAC 2312</p>
-                            <p className="text-white/30 text-[9px]">Calculus II</p>
-                          </div>
-                        </div>
-                        <span className="text-purple-400 font-bold text-sm">B+</span>
-                      </div>
-                      
-                      <div className="flex items-center justify-between bg-[#1a1a1a] rounded-xl p-3 border border-white/5">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
-                            <span className="text-amber-400 text-[10px] font-bold">PH</span>
-                          </div>
-                          <div>
-                            <p className="text-white text-sm font-medium">PHY 2048</p>
-                            <p className="text-white/30 text-[9px]">Physics I</p>
-                          </div>
-                        </div>
-                        <span className="text-emerald-400 font-bold text-sm">A-</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Home indicator */}
-                  <div className="h-7 bg-black flex items-center justify-center">
-                    <div className="w-28 h-1 bg-white/20 rounded-full" />
-                  </div>
-                </div>
-                
-                {/* Bottom edge with USB-C and speakers - visible in this perspective */}
-                <div 
-                  className="absolute -bottom-[12px] left-[60px] right-[60px] h-[12px] flex items-center justify-center gap-2"
-                  style={{
-                    background: 'linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%)',
-                    borderRadius: '0 0 8px 8px',
-                    transform: 'rotateX(-90deg)',
-                    transformOrigin: 'top center',
-                  }}
-                >
-                  {/* Left speaker grills */}
-                  <div className="flex gap-[3px]">
-                    {[...Array(6)].map((_, i) => (
-                      <div key={`l-${i}`} className="w-[3px] h-[3px] rounded-full bg-[#1a1a1a]" />
-                    ))}
-                  </div>
-                  
-                  {/* USB-C port */}
-                  <div className="w-[20px] h-[6px] bg-[#0a0a0a] rounded-full mx-2" />
-                  
-                  {/* Right speaker grills */}
-                  <div className="flex gap-[3px]">
-                    {[...Array(6)].map((_, i) => (
-                      <div key={`r-${i}`} className="w-[3px] h-[3px] rounded-full bg-[#1a1a1a]" />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+        />
+        <div
+          className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 65%)',
+          }}
+        />
+        {/* Geometric accent — top left */}
+        <div
+          className="absolute top-20 left-10 w-16 h-16 rounded-2xl opacity-20 pointer-events-none"
+          style={{ background: 'linear-gradient(135deg, #14B8A6, #7c3aed)', transform: 'rotate(18deg)' }}
+        />
+        {/* Geometric accent — bottom right */}
+        <div
+          className="absolute bottom-20 right-14 w-10 h-10 rounded-xl opacity-15 pointer-events-none"
+          style={{ background: 'linear-gradient(135deg, #7c3aed, #14B8A6)', transform: 'rotate(-12deg)' }}
+        />
+
+        <div className="relative z-10 max-w-4xl mx-auto">
+          {/* Eyebrow */}
+          <div className="animate-fade-in inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#14B8A6]/10 border border-[#14B8A6]/25 text-[#0f9e8e] text-xs font-semibold mb-8 tracking-wide uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#14B8A6] inline-block" />
+            Designed for Florida College Students
           </div>
-        </div>
-      </section>
 
-      {/* ═══════════════════════════════════════════════════════ */}
-      {/* CTA SECTION */}
-      {/* ═══════════════════════════════════════════════════════ */}
+          {/* Headline */}
+          <h1
+            className="animate-fade-in text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.06] tracking-tight mb-6"
+            style={{ animationDelay: '0.08s' }}
+          >
+            Your semester, under control.
+            <br />
+            <span
+              className="bg-clip-text text-transparent"
+              style={{ backgroundImage: 'linear-gradient(135deg, #0d9488 0%, #8b5cf6 100%)' }}
+            >
+              Your time, back to you.
+            </span>
+          </h1>
 
-      <section className="relative z-10 px-6 py-24 bg-[#0a0a0a]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-5xl text-white mb-6">
-            <span className="font-playfair italic font-normal">Ready</span>{' '}
-            <span className="font-playfair font-normal">to take control?</span>
-          </h2>
-          <p className="text-lg text-white/60 mb-10">
-            Join students who've already transformed how they track their academic success.
+          {/* Subtext */}
+          <p
+            className="animate-fade-in text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10"
+            style={{ animationDelay: '0.18s' }}
+          >
+            Upload your syllabus. SIGMA reads every deadline, every assignment,
+            every grade weight — and keeps track so you don't have to. Check
+            where you stand in 30 seconds, from anywhere.
           </p>
-          <button
-            onClick={() => navigate('/signup')}
-            className="group px-8 py-4 bg-white text-slate-900 rounded-full font-semibold text-lg hover:bg-white/90 transition-all flex items-center gap-2 mx-auto"
-          >
-            Get Started Free
-            <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </button>
-          <p className="text-white/40 text-sm mt-4">No credit card required</p>
-        </div>
-      </section>
 
-      {/* ═══════════════════════════════════════════════════════ */}
-      {/* FIXED BOTTOM NAVIGATION */}
-      {/* ═══════════════════════════════════════════════════════ */}
-      
-      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-48px)] max-w-4xl">
-        <div className="flex items-center justify-between px-4 md:px-6 py-3 bg-black/80 backdrop-blur-xl border border-white/10 rounded-full">
-          {/* Logo */}
-          <Logo variant="dark" height={32} linkTo="/" />
-          
-          {/* Center Links */}
-          <div className="hidden md:flex items-center gap-6">
-            <button className="flex items-center gap-1 text-white/70 hover:text-white transition text-sm font-medium">
-              FEATURES
-              <Plus className="h-3 w-3" />
-            </button>
-            <button className="text-white/70 hover:text-white transition text-sm font-medium">
-              FOR STUDENTS
-            </button>
-            <button className="text-white/70 hover:text-white transition text-sm font-medium">
-              RESOURCES
-            </button>
-          </div>
-          
-          {/* Right Actions */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate('/login')}
-              className="text-white/70 hover:text-white transition text-sm font-medium hidden sm:block"
-            >
-              LOG IN
-            </button>
+          {/* CTAs */}
+          <div
+            className="animate-fade-in flex flex-col sm:flex-row items-center justify-center gap-3 mb-5"
+            style={{ animationDelay: '0.28s' }}
+          >
             <button
               onClick={() => navigate('/signup')}
-              className="flex items-center gap-2 px-4 py-2 bg-white text-slate-900 rounded-full font-semibold text-sm hover:bg-white/90 transition"
+              className="group flex items-center gap-2 px-7 py-4 md:px-9 md:py-5 bg-[#14B8A6] text-white font-semibold text-base rounded-xl hover:bg-[#0f9e8e] transition-all shadow-md hover:shadow-xl active:scale-[0.98]"
             >
-              GET STARTED
-              <ArrowRight className="h-4 w-4" />
+              Get Started Free
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+            <button
+              onClick={() => navigate('/login')}
+              className="px-7 py-4 md:px-9 md:py-5 text-gray-600 font-medium text-base rounded-xl border border-gray-200 hover:border-gray-300 hover:text-[#1E293B] bg-white transition-all"
+            >
+              Sign In
             </button>
           </div>
+
+          <p
+            className="animate-fade-in text-sm text-gray-400"
+            style={{ animationDelay: '0.38s' }}
+          >
+            No credit card required · Free for up to 2 courses
+          </p>
         </div>
-      </nav>
+      </section>
 
-      {/* ═══════════════════════════════════════════════════════ */}
-      {/* FOOTER */}
-      {/* ═══════════════════════════════════════════════════════ */}
+      {/* ── PROBLEM ───────────────────────────────────────────────────────── */}
+      <section className="bg-white py-32 px-5">
+        <div className="max-w-5xl mx-auto">
+          <FadeIn className="text-center mb-14">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#14B8A6] mb-3">You're not imagining it.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1E293B]">
+              You're not the problem.
+              <br />
+              Your tools are.
+            </h2>
+          </FadeIn>
 
-      <footer className="relative z-10 px-6 py-8 pb-24 bg-[#0a0a0a] border-t border-white/10">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Logo variant="dark" height={24} linkTo={false} />
-            <span className="text-white/60 text-sm">© 2025 SIGMA. All rights reserved.</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[
+              {
+                icon: AlertCircle,
+                color: '#ef4444',
+                bg: 'rgba(239,68,68,0.07)',
+                text: 'Missed a deadline because you forgot to check Canvas',
+                delay: 0,
+              },
+              {
+                icon: Calculator,
+                color: '#f59e0b',
+                bg: 'rgba(245,158,11,0.07)',
+                text: 'Calculated your grade wrong and panicked before finals',
+                delay: 100,
+              },
+              {
+                icon: Layers,
+                color: '#7c3aed',
+                bg: 'rgba(124,58,237,0.07)',
+                text: "Used your lunch break to figure out what's due this week instead of actually eating",
+                delay: 200,
+              },
+            ].map(({ icon: Icon, color, bg, text, delay }) => (
+              <FadeIn key={text} delay={delay}>
+                <div className="p-7 rounded-2xl bg-gray-50 border border-gray-100 h-full hover:scale-[1.02] transition-all duration-300 hover:shadow-glass-sm cursor-default">
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
+                    style={{ background: bg }}
+                  >
+                    <Icon className="w-5 h-5" style={{ color }} />
+                  </div>
+                  <p className="text-[#1E293B] font-medium leading-relaxed">{text}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          <FadeIn delay={300} className="mt-10 text-center">
+            <p className="text-gray-400 text-sm">
+              You're not alone. 70% of working students miss at least one deadline per semester.
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── FEATURES ──────────────────────────────────────────────────────── */}
+      <section id="features" className="bg-[#FAFAFA] py-32 px-5">
+        <div className="max-w-5xl mx-auto">
+          <FadeIn className="text-center mb-20">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#14B8A6] mb-3">What changes when you use SIGMA</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1E293B]">
+              One app. Zero missed deadlines.
+            </h2>
+          </FadeIn>
+
+          {/* Feature 1 — text left, visual right */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+            <FadeIn>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-[#14B8A6]/10 flex items-center justify-center">
+                  <RefreshCw className="w-5 h-5 text-[#14B8A6]" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-widest text-[#14B8A6]">Feature 01</span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-[#1E293B] mb-4 leading-tight">
+                Your classes, always current
+              </h3>
+              <p className="text-gray-500 text-lg leading-relaxed mb-6">
+                Connect your school account once. Every new assignment, grade
+                update, and due date shows up in SIGMA automatically — before
+                you even think to check.
+              </p>
+              <button
+                onClick={() => navigate('/signup')}
+                className="text-[#14B8A6] font-semibold text-sm flex items-center gap-1.5 hover:gap-2.5 transition-all"
+              >
+                Get started free <ArrowRight className="w-4 h-4" />
+              </button>
+            </FadeIn>
+            <FadeIn delay={150}>
+              <SyncVisual />
+            </FadeIn>
+          </div>
+
+          {/* Feature 2 — visual left, text right */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+            <FadeIn delay={150} className="order-last md:order-first">
+              <GradeVisual />
+            </FadeIn>
+            <FadeIn>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center">
+                  <Brain className="w-5 h-5 text-violet-600" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-widest text-violet-500">Feature 02</span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-[#1E293B] mb-4 leading-tight">
+                Know your grade before the final hits
+              </h3>
+              <p className="text-gray-500 text-lg leading-relaxed mb-6">
+                See exactly what score you need on every remaining assignment
+                to reach your goal. No spreadsheet math. No guessing at 1am.
+              </p>
+              <button
+                onClick={() => navigate('/signup')}
+                className="text-violet-500 font-semibold text-sm flex items-center gap-1.5 hover:gap-2.5 transition-all"
+              >
+                See your grade predictions <ArrowRight className="w-4 h-4" />
+              </button>
+            </FadeIn>
+          </div>
+
+          {/* Feature 3 — text left, visual right */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <FadeIn>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
+                  <LayoutDashboard className="w-5 h-5 text-amber-500" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-widest text-amber-500">Feature 03</span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-[#1E293B] mb-4 leading-tight">
+                Everything in One Dashboard
+              </h3>
+              <p className="text-gray-500 text-lg leading-relaxed mb-6">
+                All your courses, deadlines, grades, and insights — one screen.
+                Check it in 30 seconds between classes or shifts.
+              </p>
+              <button
+                onClick={() => navigate('/signup')}
+                className="text-amber-500 font-semibold text-sm flex items-center gap-1.5 hover:gap-2.5 transition-all"
+              >
+                See the dashboard <ArrowRight className="w-4 h-4" />
+              </button>
+            </FadeIn>
+            <FadeIn delay={150}>
+              <DashboardVisual />
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
+      <section id="how-it-works" className="bg-white py-32 px-5">
+        <div className="max-w-5xl mx-auto">
+          <FadeIn className="text-center mb-16">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#14B8A6] mb-3">Simple by design</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1E293B]">
+              Get started in under 2 minutes.
+            </h2>
+          </FadeIn>
+
+          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Connector line */}
+            <div
+              className="hidden md:block absolute top-10 left-[calc(100%/6+20px)] right-[calc(100%/6+20px)] h-px"
+              style={{
+                background: 'linear-gradient(90deg, transparent, #14B8A6, #7c3aed, transparent)',
+                opacity: 0.3,
+              }}
+            />
+
+            {[
+              {
+                step: 1,
+                icon: FileText,
+                title: 'Upload Your Syllabus',
+                body: 'Drop your PDF. SIGMA reads every assignment, weight, and due date automatically.',
+                delay: 0,
+              },
+              {
+                step: 2,
+                icon: Link2,
+                title: 'Connect Canvas',
+                body: 'Link your account in one click. Grades and deadlines sync continuously.',
+                delay: 130,
+              },
+              {
+                step: 3,
+                icon: Rocket,
+                title: 'Stay Ahead',
+                body: 'Get notified before anything slips. See your real grade standing at any moment. Know what to focus on this week — and what can wait.',
+                delay: 260,
+              },
+            ].map(({ step, icon: Icon, title, body, delay }) => (
+              <FadeIn key={step} delay={delay} className="flex flex-col items-center text-center">
+                <div className="relative mb-6">
+                  <div className="w-20 h-20 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-center shadow-glass-sm">
+                    <Icon className="w-8 h-8 text-[#1E293B]" />
+                  </div>
+                  <div
+                    className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white text-[11px] font-bold shadow-sm"
+                    style={{ background: 'linear-gradient(135deg, #14B8A6, #7c3aed)' }}
+                  >
+                    {step}
+                  </div>
+                </div>
+                <h3 className="text-base font-bold text-[#1E293B] mb-2">{title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed max-w-[220px]">{body}</p>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SOCIAL PROOF ──────────────────────────────────────────────────── */}
+      <section className="bg-[#FAFAFA] py-20 px-5">
+        <FadeIn className="max-w-2xl mx-auto text-center">
+          {/* Gradient quote mark */}
+          <div
+            className="text-7xl font-serif leading-none mb-4 bg-clip-text text-transparent"
+            style={{ backgroundImage: 'linear-gradient(135deg, #14B8A6, #7c3aed)' }}
+          >
+            "
+          </div>
+          <p className="text-xl md:text-2xl font-medium text-[#1E293B] leading-relaxed mb-3">
+            Built by a student who works full-time and studies full-time.
+          </p>
+          <p className="text-gray-500 leading-relaxed mb-6">
+            SIGMA was born from the frustration of getting off a 9-hour shift,
+            opening your laptop, and realizing you have no idea what's due
+            tomorrow. There had to be a better way.
+          </p>
+          <div className="flex items-center justify-center gap-3">
+            <div
+              className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold"
+              style={{ background: 'linear-gradient(135deg, #14B8A6, #7c3aed)' }}
+            >
+              N
+            </div>
+            <div className="text-left">
+              <p className="text-sm font-semibold text-[#1E293B]">Nicolas Navarro</p>
+              <p className="text-xs text-gray-400">Founder · FAU Student · Works Full-Time</p>
+            </div>
+          </div>
+        </FadeIn>
+      </section>
+
+      {/* ── PRICING ───────────────────────────────────────────────────────── */}
+      <section id="pricing" className="bg-white py-32 px-5">
+        <div className="max-w-4xl mx-auto">
+          <FadeIn className="text-center mb-14">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#14B8A6] mb-3">Pricing</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1E293B]">
+              Less than a cup of coffee.
+            </h2>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Free */}
+            <FadeIn delay={0}>
+              <div className="p-8 rounded-2xl border border-gray-200 bg-gray-50 h-full flex flex-col hover:scale-[1.02] transition-all duration-300 hover:shadow-glass-sm">
+                <div className="mb-6">
+                  <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">Free</p>
+                  <div className="flex items-end gap-1">
+                    <span className="text-5xl font-bold text-[#1E293B]">$0</span>
+                    <span className="text-gray-400 mb-1.5">/month</span>
+                  </div>
+                  <p className="text-gray-500 text-sm mt-2">Perfect for getting started.</p>
+                </div>
+                <ul className="space-y-3 flex-1 mb-8">
+                  {[
+                    'Up to 2 courses',
+                    'Syllabus upload & parsing',
+                    'Basic grade dashboard',
+                    'Deadline calendar',
+                    'Manual grade entry',
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-2.5 text-sm text-gray-600">
+                      <Check className="w-4 h-4 text-[#14B8A6] flex-shrink-0 mt-0.5" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={() => navigate('/signup')}
+                  className="w-full py-3 rounded-xl border border-gray-300 text-[#1E293B] font-semibold text-sm hover:border-gray-400 hover:bg-white transition-all"
+                >
+                  Start Free
+                </button>
+              </div>
+            </FadeIn>
+
+            {/* Pro */}
+            <FadeIn delay={120}>
+              <div
+                className="p-8 rounded-2xl border-2 h-full flex flex-col relative overflow-hidden hover:scale-[1.02] transition-all duration-300 hover:shadow-glass-sm"
+                style={{ borderColor: '#14B8A6', background: 'linear-gradient(160deg, rgba(20,184,166,0.04) 0%, white 50%)' }}
+              >
+                {/* Popular badge */}
+                <div
+                  className="absolute top-5 right-5 px-3 py-1 rounded-full text-white text-[11px] font-bold uppercase tracking-wider"
+                  style={{ background: 'linear-gradient(135deg, #14B8A6, #7c3aed)' }}
+                >
+                  Most Popular
+                </div>
+                <div className="mb-6">
+                  <p className="text-sm font-bold uppercase tracking-widest text-[#14B8A6] mb-2">Pro</p>
+                  <div className="flex items-end gap-1">
+                    <span className="text-5xl font-bold text-[#1E293B]">$4.99</span>
+                    <span className="text-gray-400 mb-1.5">/month</span>
+                  </div>
+                  <p className="text-gray-500 text-sm mt-2">For students who want every edge.</p>
+                </div>
+                <ul className="space-y-3 flex-1 mb-8">
+                  {[
+                    'Unlimited courses',
+                    'Canvas auto-sync',
+                    'AI grade predictions',
+                    'AI study advisor',
+                    'Priority deadline alerts',
+                    'GPA predictor',
+                    'Everything in Free',
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-2.5 text-sm text-[#1E293B]">
+                      <Check className="w-4 h-4 text-[#14B8A6] flex-shrink-0 mt-0.5" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={() => navigate('/signup')}
+                  className="w-full py-3 rounded-xl text-white font-semibold text-sm transition-all hover:opacity-90 active:scale-[0.98]"
+                  style={{ background: 'linear-gradient(135deg, #14B8A6, #7c3aed)' }}
+                >
+                  Start Free →
+                </button>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ─────────────────────────────────────────────────────── */}
+      <section
+        className="py-28 px-5 relative overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #0f9e8e 0%, #14B8A6 40%, #7c3aed 100%)' }}
+      >
+        {/* Subtle geometric shapes */}
+        <div
+          className="absolute top-8 right-16 w-24 h-24 rounded-2xl opacity-10 pointer-events-none"
+          style={{ border: '2px solid white', transform: 'rotate(20deg)' }}
+        />
+        <div
+          className="absolute bottom-10 left-10 w-16 h-16 rounded-xl opacity-10 pointer-events-none"
+          style={{ border: '2px solid white', transform: 'rotate(-15deg)' }}
+        />
+
+        <FadeIn className="max-w-2xl mx-auto text-center relative z-10">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-5 leading-tight">
+            Ready to own
+            <br />
+            your semester?
+          </h2>
+          <p className="text-white/75 text-lg mb-10 leading-relaxed">
+            Join students who stopped drowning in tabs and started finishing the semester strong.
+          </p>
+          <button
+            onClick={() => navigate('/signup')}
+            className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-[#0f9e8e] font-bold text-base rounded-xl hover:bg-white/90 transition-all shadow-lg active:scale-[0.98]"
+          >
+            Get Started Free
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+          </button>
+          <p className="text-white/55 text-sm mt-5">
+            No credit card required · Free for up to 2 courses
+          </p>
+        </FadeIn>
+      </section>
+
+      {/* ── FOOTER ────────────────────────────────────────────────────────── */}
+      <footer className="bg-[#0f172a] py-10 px-5 relative">
+        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, #14B8A6, #8b5cf6)' }} />
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="text-gray-400 text-sm font-medium">© 2026 NavTech · yoursigma.ai</p>
+            <p className="text-gray-600 text-xs mt-1">Made with 💜 by a student, for students.</p>
           </div>
           <div className="flex items-center gap-6">
-            <a href="/terms" className="text-white/60 hover:text-white text-sm transition">Terms</a>
-            <a href="/privacy" className="text-white/60 hover:text-white text-sm transition">Privacy</a>
+            {[
+              { label: 'Privacy', href: '/privacy' },
+              { label: 'Terms', href: '/terms' },
+              { label: 'Contact', href: 'mailto:hello@yoursigma.ai' },
+              { label: 'Sign In', href: '/login' },
+            ].map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                className="text-gray-500 hover:text-gray-300 text-sm transition-colors"
+              >
+                {label}
+              </a>
+            ))}
           </div>
         </div>
       </footer>
