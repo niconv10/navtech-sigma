@@ -155,3 +155,25 @@ This is your accountability partner and your pitch deck material.
 3. Full app audit — navigate every page, document what works
 4. Install Claude Code CLI
 5. Create GitHub Projects board (Kanban)
+
+## Session 3 — April 13, 2026 (continued)
+
+**Focus:** Supabase setup, auth, app audit
+
+### Actions Completed
+- [x] Installed Claude Code CLI v2.1.104
+- [x] Ran all 8 Supabase migrations — 5 tables created (profiles, semesters, courses, assignments, user_goals)
+- [x] Disabled email verification for development
+- [x] Enabled Email auth provider
+- [x] Login/Signup working — first user created (Nicolas Navarro)
+- [x] Full app audit via Claude Code — 4/5 pages use real data
+- [x] Only Insights page has hardcoded mock data (GPA Trend + Credits Earned)
+
+### Key Finding
+App is 90% wired to real data. Much more complete than expected.
+
+### Next Steps
+1. Add first course with real syllabus data
+2. Test syllabus upload flow
+3. Fix Insights hardcoded data
+4. Commit and push all changes
