@@ -54,7 +54,7 @@ export function WeekStrip({
             {hasWork && (
               <div className={cn(
                 "w-1.5 h-1.5 rounded-full mt-1",
-                isSelected ? "bg-white" : "bg-[#14B8A6]"
+                isSelected ? "bg-white" : "bg-[#F05A28]"
               )} />
             )}
           </button>

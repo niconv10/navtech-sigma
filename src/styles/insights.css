@@ -105,13 +105,13 @@
   align-items: center;
   justify-content: center;
   background: rgba(20, 184, 166, 0.1);
-  color: #14b8a6;
+  color: #F05A28;
   flex-shrink: 0;
 }
 
 .dark .stat-icon-wrapper {
   background: rgba(20, 184, 166, 0.2);
-  color: #2dd4bf;
+  color: #FB923C;
 }
 
 /* Stat content */
@@ -772,11 +772,11 @@
 .credits-count {
   font-size: 14px;
   font-weight: 600;
-  color: #14b8a6;
+  color: #F05A28;
 }
 
 .dark .credits-count {
-  color: #2dd4bf;
+  color: #FB923C;
 }
 
 /* What-If Promo Widget */
@@ -848,7 +848,7 @@
 .promo-button {
   padding: 12px 24px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  background: linear-gradient(135deg, #F59E0B, #FB923C);
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
@@ -1014,7 +1014,7 @@
 }
 
 .calendar-day.today .calendar-day-number {
-  color: #14b8a6;
+  color: #F05A28;
   font-weight: 600;
 }
 
@@ -1059,7 +1059,7 @@
 
 .calendar-day-points {
   font-size: 10px;
-  color: #14b8a6;
+  color: #F05A28;
   margin-top: 2px;
 }
 

@@ -380,7 +380,7 @@ export function GradeFlowDiagram({ categories, totalPointsEarned, courses = [] }
             {/* Middle edge bars gradient - cyan */}
             <linearGradient id="middleEdgeLeftGrad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#99F6E4" stopOpacity="0.8" />
-              <stop offset="50%" stopColor="#5EEAD4" stopOpacity="0.9" />
+              <stop offset="50%" stopColor="#FDBA74" stopOpacity="0.9" />
               <stop offset="100%" stopColor="#99F6E4" stopOpacity="0.8" />
             </linearGradient>
             

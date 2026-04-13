@@ -22,7 +22,7 @@ export function PremiumFocusTimer({ className }: PremiumFocusTimerProps) {
   
   // Mock courses if none exist
   const displayCourses = courses.length > 0 ? courses : [
-    { id: '1', code: 'COP3530', color: '#14B8A6' },
+    { id: '1', code: 'COP3530', color: '#F05A28' },
     { id: '2', code: 'MAP2302', color: '#8B5CF6' },
     { id: '3', code: 'PHY2049', color: '#3B82F6' },
     { id: '4', code: 'STA3032', color: '#F59E0B' },
@@ -68,8 +68,8 @@ export function PremiumFocusTimer({ className }: PremiumFocusTimerProps) {
   const strokeDashoffset = circumference - (timerProgress / 100) * circumference;
   
   const currentColor = selectedCourse 
-    ? displayCourses.find(c => c.id === selectedCourse)?.color || '#14B8A6'
-    : '#14B8A6';
+    ? displayCourses.find(c => c.id === selectedCourse)?.color || '#F05A28'
+    : '#F05A28';
 
   return (
     <div className={cn("focus-timer-widget", className)}>

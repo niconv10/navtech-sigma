@@ -136,7 +136,7 @@
 
 /* Bar chart - brighter purple */
 .dark .bar-highlight {
-  background: linear-gradient(180deg, #a78bfa 0%, #8b5cf6 100%);
+  background: linear-gradient(180deg, #FBB650 0%, #F59E0B 100%);
   box-shadow: 0 8px 24px rgba(139, 92, 246, 0.5);
 }
 
@@ -266,7 +266,7 @@
 
 .dark .insight-card.purple .insight-icon {
   background: rgba(139, 92, 246, 0.25);
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 /* Cyan insight */
@@ -363,7 +363,7 @@
 
 /* Primary button */
 .dark .btn-primary {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  background: linear-gradient(135deg, #FBB650, #F59E0B);
   box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
 }
 
@@ -475,7 +475,7 @@
 
 .dark .nav-item.active {
   background: rgba(139, 92, 246, 0.15);
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 /* ============================================
@@ -517,7 +517,7 @@
 .dark .cta-banner,
 .dark .goals-cta-banner,
 .dark .analytics-cta {
-  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #4f46e5 100%);
+  background: linear-gradient(135deg, #F59E0B 0%, #FB923C 50%, #EA580C 100%);
   box-shadow:
     0 12px 40px rgba(139, 92, 246, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -566,7 +566,7 @@
 }
 
 .dark .gpa-progress-fill {
-  background: linear-gradient(90deg, #2dd4bf, #14b8a6);
+  background: linear-gradient(90deg, #FB923C, #F05A28);
   box-shadow: 0 0 16px rgba(45, 212, 191, 0.4);
 }
 
@@ -605,14 +605,14 @@
 
 .dark .badge-purple {
   background: rgba(139, 92, 246, 0.2);
-  color: #a78bfa;
+  color: #FBB650;
   border-color: rgba(139, 92, 246, 0.3);
 }
 
 /* GPA target badge */
 .dark .gpa-target-badge {
   background: rgba(20, 184, 166, 0.2);
-  color: #2dd4bf;
+  color: #FB923C;
   border: 1px solid rgba(20, 184, 166, 0.3);
 }
 
@@ -1040,7 +1040,7 @@
 }
 
 .dark .grade-option.active {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  background: linear-gradient(135deg, #FBB650, #F59E0B);
   box-shadow: 0 4px 16px rgba(139, 92, 246, 0.5);
 }
 
@@ -1117,7 +1117,7 @@
 }
 
 .dark .status-item.target .status-value {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .status-item.target .status-letter {
@@ -1127,7 +1127,7 @@
 
 .dark .status-item.target .status-letter {
   background: rgba(139, 92, 246, 0.25);
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .status-divider {
@@ -1525,12 +1525,12 @@
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: #8b5cf6;
+  color: #F59E0B;
 }
 
 .dark .ai-badge {
   background: rgba(139, 92, 246, 0.25);
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .ai-insight-text {
@@ -1565,7 +1565,7 @@
 }
 
 .action-btn.primary {
-  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  background: linear-gradient(135deg, #F59E0B, #FB923C);
   color: #ffffff;
   box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
 }

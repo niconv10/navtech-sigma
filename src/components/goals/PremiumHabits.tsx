@@ -28,8 +28,8 @@ export function PremiumHabits({ className }: PremiumHabitsProps) {
           className="h-full rounded-full transition-all duration-700"
           style={{ 
             width: `${progress}%`,
-            background: 'linear-gradient(90deg, #14B8A6, #0EA5E9)',
-            boxShadow: '0 0 12px rgba(20, 184, 166, 0.4)',
+            background: 'linear-gradient(90deg, #F05A28, #F59E0B)',
+            boxShadow: '0 0 12px rgba(240, 90, 40, 0.4)',
           }}
         />
       </div>

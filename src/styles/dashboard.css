@@ -1208,7 +1208,7 @@
 }
 
 .dark .grade-option-v2.active {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  background: linear-gradient(135deg, #FBB650, #F59E0B);
   box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
 }
 
@@ -1270,7 +1270,7 @@
 }
 
 .dark .status-block.target .status-block-value {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .status-block-letter {
@@ -1295,7 +1295,7 @@
 
 .dark .status-block.target .status-block-letter {
   background: rgba(139, 92, 246, 0.25);
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .status-block.gap {
@@ -1520,7 +1520,7 @@
 }
 
 .dark .inline-grade-link {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 /* Assignments Card */
@@ -1630,7 +1630,7 @@
   width: 24px;
   height: 24px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  background: linear-gradient(135deg, #F59E0B, #FB923C);
   color: #ffffff;
 }
 

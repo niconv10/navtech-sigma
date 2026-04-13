@@ -75,7 +75,7 @@ export function StudyAnalyticsTab({ className }: StudyAnalyticsTabProps) {
           color: course.color || getColorByIndex(index),
         }))
       : [
-          { id: '1', code: 'COP3530', name: 'Data Structures', hours: 45, color: '#14B8A6' },
+          { id: '1', code: 'COP3530', name: 'Data Structures', hours: 45, color: '#F05A28' },
           { id: '2', code: 'MAP2302', name: 'Differential Equations', hours: 32, color: '#8B5CF6' },
           { id: '3', code: 'PHY2049', name: 'Physics II', hours: 18, color: '#3B82F6' },
           { id: '4', code: 'STA3032', name: 'Probability & Statistics', hours: 15, color: '#F59E0B' },
@@ -606,7 +606,7 @@ export function StudyAnalyticsTab({ className }: StudyAnalyticsTabProps) {
               weak: { text: 'text-red-500 dark:text-red-400', bar: '#EF4444', barDark: '#F87171' },
             };
             const { text, bar, barDark } = correlationColors[course.correlation as keyof typeof correlationColors];
-            const courseColor = courseDistribution.find(c => c.code === course.code)?.color || '#14B8A6';
+            const courseColor = courseDistribution.find(c => c.code === course.code)?.color || '#F05A28';
             
             return (
               <div 

@@ -9,7 +9,7 @@
 
 export const CHART_PALETTE = [
   '#8B5CF6', // chart-1: violet
-  '#14B8A6', // chart-2: teal
+  '#F05A28', // chart-2: orange
   '#3B82F6', // chart-3: blue
   '#F59E0B', // chart-4: amber
   '#EC4899', // chart-5: pink
@@ -24,7 +24,7 @@ export const ASSIGNMENT_TYPE_COLORS: Record<string, string> = {
   project:     '#8B5CF6', // violet
   discussion:  '#EC4899', // pink
   lab:         '#6366F1', // indigo
-  essay:       '#14B8A6', // teal
+  essay:       '#F05A28', // orange
   other:       '#6B7280', // gray
 };
 

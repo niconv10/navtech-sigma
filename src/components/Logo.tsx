@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import logoDark from "@/assets/logo-dark.png";
-import logoBlack from "@/assets/logo-black.png";
+import logoColor from "@/assets/sigma-logo-color.svg";
+import logoWhite from "@/assets/sigma-logo-white.svg";
 import { useTheme } from "@/hooks/use-theme";
 
 interface LogoProps {
@@ -16,25 +16,25 @@ interface LogoProps {
   className?: string;
 }
 
-export function Logo({ 
-  variant, 
-  height = 40, 
-  showText = true, 
+export function Logo({
+  variant,
+  height = 40,
+  showText = true,
   linkTo = "/",
   className = ""
 }: LogoProps) {
   const { resolvedMode } = useTheme();
-  
-  // Use variant prop if provided, otherwise use resolved theme
-  // Note: "dark" variant = use dark logo (white text for dark backgrounds)
-  // "light" variant = use light logo (dark text for light backgrounds)
-  const useDarkLogo = variant ? variant === "dark" : resolvedMode === "dark";
-  const logoSrc = useDarkLogo ? logoDark : logoBlack;
+
+  // variant="light" → light background (landing navbar, auth pages) → color logo
+  // variant="dark"  → dark background (sidebar, dark mode) → white logo
+  // no variant      → follow theme
+  const useDarkBackground = variant ? variant === "dark" : resolvedMode === "dark";
+  const logoSrc = useDarkBackground ? logoWhite : logoColor;
 
   const logoElement = (
-    <img 
-      src={logoSrc} 
-      alt="Sigma" 
+    <img
+      src={logoSrc}
+      alt="SIGMA"
       style={{ height: `${height}px`, width: "auto" }}
       className={`object-contain ${className}`}
     />

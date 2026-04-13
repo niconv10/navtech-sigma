@@ -216,10 +216,10 @@ export default function Insights() {
                 <Line
                   type="monotone"
                   dataKey="gpa"
-                  stroke="#14B8A6"
+                  stroke="#F05A28"
                   strokeWidth={3}
-                  dot={{ fill: "#14B8A6", r: 4, strokeWidth: 0 }}
-                  activeDot={{ r: 6, strokeWidth: 0, fill: "#14B8A6" }}
+                  dot={{ fill: "#F05A28", r: 4, strokeWidth: 0 }}
+                  activeDot={{ r: 6, strokeWidth: 0, fill: "#F05A28" }}
                 />
               </LineChart>
             </ResponsiveContainer>

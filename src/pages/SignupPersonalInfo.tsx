@@ -40,7 +40,7 @@ function PasswordRequirements({ password }: { password: string }) {
           <div 
             className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${
               req.met 
-                ? 'bg-teal-500 border-teal-500' 
+                ? 'bg-orange-500 border-orange-500'
                 : 'border-gray-300 bg-white'
             }`}
           >

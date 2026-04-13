@@ -37,7 +37,7 @@
 }
 
 .dark .strategy-icon {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .strategy-card-title {
@@ -100,7 +100,7 @@
 }
 
 .dark .quick-stat-value.accent {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 /* Focus Card */
@@ -139,7 +139,7 @@
 
 .dark .focus-rank {
   background: rgba(139, 92, 246, 0.2);
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .focus-info {
@@ -201,7 +201,7 @@
 }
 
 .dark .whatif-scenario strong {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .whatif-result {
@@ -375,12 +375,12 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: #8b5cf6;
+  color: #F59E0B;
 }
 
 .dark .ai-badge-v2 {
   background: rgba(139, 92, 246, 0.2);
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .ai-insight-text-v2 {
@@ -742,9 +742,9 @@
 }
 
 .dark .filter-chip.active {
-  background: color-mix(in srgb, var(--chip-color, #a78bfa) 20%, transparent);
-  border-color: var(--chip-color, #a78bfa);
-  color: var(--chip-color, #a78bfa);
+  background: color-mix(in srgb, var(--chip-color, #FBB650) 20%, transparent);
+  border-color: var(--chip-color, #FBB650);
+  color: var(--chip-color, #FBB650);
 }
 
 .filter-clear {
@@ -763,7 +763,7 @@
 }
 
 .dark .filter-clear {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 /* Toolbar Actions */
@@ -820,11 +820,11 @@
 .dark .toolbar-btn.active {
   background: rgba(139, 92, 246, 0.2);
   border-color: rgba(139, 92, 246, 0.4);
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .dark .toolbar-btn.primary {
-  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  background: linear-gradient(135deg, #FBB650, #F59E0B);
 }
 
 /* Bulk Actions Bar */
@@ -850,7 +850,7 @@
 }
 
 .dark .bulk-count {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .bulk-buttons {
@@ -883,7 +883,7 @@
 }
 
 .dark .bulk-btn {
-  background: #a78bfa;
+  background: #FBB650;
 }
 
 .dark .bulk-btn.danger {
@@ -1303,7 +1303,7 @@
 
 .dark .empty-clear {
   background: rgba(139, 92, 246, 0.15);
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 /* List Summary */
@@ -1322,7 +1322,7 @@
 }
 
 .dark .filter-indicator {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 /* ============================================
@@ -1770,9 +1770,9 @@
 }
 
 .dark .trend-tab.active {
-  background: color-mix(in srgb, var(--tab-color, #a78bfa) 15%, transparent);
-  border-color: var(--tab-color, #a78bfa);
-  color: var(--tab-color, #a78bfa);
+  background: color-mix(in srgb, var(--tab-color, #FBB650) 15%, transparent);
+  border-color: var(--tab-color, #FBB650);
+  color: var(--tab-color, #FBB650);
 }
 
 .trend-tab-label {
@@ -1805,7 +1805,7 @@
 }
 
 .dark .trend-tab.active .trend-tab-count {
-  background: var(--tab-color, #a78bfa);
+  background: var(--tab-color, #FBB650);
   color: #000000;
 }
 
@@ -1938,9 +1938,9 @@
 }
 
 .dark .trend-tab.active {
-  background: color-mix(in srgb, var(--tab-color, #a78bfa) 15%, transparent);
-  border-color: var(--tab-color, #a78bfa);
-  color: var(--tab-color, #a78bfa);
+  background: color-mix(in srgb, var(--tab-color, #FBB650) 15%, transparent);
+  border-color: var(--tab-color, #FBB650);
+  color: var(--tab-color, #FBB650);
 }
 
 .trend-tab-label {
@@ -1973,7 +1973,7 @@
 }
 
 .dark .trend-tab.active .trend-tab-count {
-  background: var(--tab-color, #a78bfa);
+  background: var(--tab-color, #FBB650);
   color: #000000;
 }
 
@@ -2438,7 +2438,7 @@
 
 .dark .filter-pill.clear {
   background: transparent;
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 /* Toolbar Right */

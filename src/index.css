@@ -288,10 +288,10 @@
     --color-red-muted: rgba(239, 68, 68, 0.2);
     --color-red-glow: 0 8px 32px rgba(248, 113, 113, 0.4);
 
-    /* Teal - for brand, primary */
-    --color-teal: #2dd4bf;
-    --color-teal-muted: rgba(20, 184, 166, 0.2);
-    --color-teal-glow: 0 8px 32px rgba(45, 212, 191, 0.4);
+    /* Orange - for brand, primary */
+    --color-teal: #F05A28;
+    --color-teal-muted: rgba(240, 90, 40, 0.2);
+    --color-teal-glow: 0 8px 32px rgba(240, 90, 40, 0.4);
 
     /* Indigo - for charts (replaces muddy brown) */
     --color-indigo: #818cf8;

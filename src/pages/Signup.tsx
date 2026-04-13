@@ -216,7 +216,7 @@ export default function Signup() {
 
             {/* Badge */}
             <div className="flex justify-center mb-6">
-              <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium bg-teal-100 text-teal-700 border border-teal-200">
+              <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium bg-orange-100 text-orange-700 border border-orange-200">
                 🎓 FREE FOR STUDENTS
               </span>
             </div>

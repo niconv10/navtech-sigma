@@ -878,7 +878,7 @@
   padding: 16px;
   background: rgba(139, 92, 246, 0.08);
   border-radius: 12px;
-  border-left: 3px solid #8b5cf6;
+  border-left: 3px solid #F59E0B;
 }
 
 .dark .recommendation-text {
@@ -965,7 +965,7 @@
 }
 
 .card-actions .action-btn.primary {
-  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  background: linear-gradient(135deg, #F59E0B, #FB923C);
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
@@ -1447,14 +1447,14 @@
   transform: translate(-50%, -50%);
   width: 12px;
   height: 12px;
-  background: #8b5cf6;
+  background: #F59E0B;
   border: 2px solid #ffffff;
   border-radius: 50%;
   box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
 }
 
 .dark .prediction-range .range-marker {
-  background: #a78bfa;
+  background: #FBB650;
   box-shadow: 0 2px 12px rgba(139, 92, 246, 0.6);
 }
 
@@ -1707,11 +1707,11 @@
 }
 
 .summary-card.predicted .summary-value {
-  color: #8b5cf6;
+  color: #F59E0B;
 }
 
 .dark .summary-card.predicted .summary-value {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 /* Predictions List */
@@ -2114,11 +2114,11 @@
 }
 
 .scenario-card.highlighted .scenario-letter {
-  color: #8b5cf6;
+  color: #F59E0B;
 }
 
 .dark .scenario-card.highlighted .scenario-letter {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .scenario-percent {
@@ -2339,11 +2339,11 @@
 }
 
 .category-stats .stat.upcoming .stat-value {
-  color: #8b5cf6;
+  color: #F59E0B;
 }
 
 .dark .category-stats .stat.upcoming .stat-value {
-  color: #a78bfa;
+  color: #FBB650;
 }
 
 .category-stats .stat-label {
@@ -2517,7 +2517,7 @@
 }
 
 .prediction-actions .action-btn.primary {
-  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  background: linear-gradient(135deg, #F59E0B, #FB923C);
   color: #ffffff;
   box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
 }

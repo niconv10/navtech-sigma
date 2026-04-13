@@ -66,7 +66,7 @@ function SyncVisual() {
   return (
     <div className="bg-white rounded-2xl shadow-glass-md border border-gray-100 p-6 w-full max-w-sm mx-auto hover:shadow-lg transition-shadow duration-300">
       <div className="flex items-center gap-2 mb-5">
-        <div className="w-2 h-2 rounded-full bg-[#14B8A6]" />
+        <div className="w-2 h-2 rounded-full bg-[#F05A28]" />
         <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Canvas Sync</span>
       </div>
       <div className="space-y-3">
@@ -81,7 +81,7 @@ function SyncVisual() {
               }}
             >
               <span className="text-sm font-medium text-[#1E293B]">{course}</span>
-              <div className="flex items-center gap-1.5 text-[#14B8A6]">
+              <div className="flex items-center gap-1.5 text-[#F05A28]">
                 <Check className="w-4 h-4" />
                 <span className="text-xs font-semibold">Synced</span>
               </div>
@@ -91,7 +91,7 @@ function SyncVisual() {
       </div>
       <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
         <span className="text-xs text-gray-400">Last synced 2 min ago</span>
-        <RefreshCw className="w-3.5 h-3.5 text-[#14B8A6]" />
+        <RefreshCw className="w-3.5 h-3.5 text-[#F05A28]" />
       </div>
     </div>
   );
@@ -120,14 +120,14 @@ function GradeVisual() {
   return (
     <div ref={ref} className="bg-white rounded-2xl shadow-glass-md border border-gray-100 p-6 w-full max-w-sm mx-auto hover:shadow-lg transition-shadow duration-300">
       <div className="flex items-center gap-2 mb-5">
-        <div className="w-2 h-2 rounded-full bg-violet-500" />
+        <div className="w-2 h-2 rounded-full bg-amber-500" />
         <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Grade Prediction</span>
       </div>
       <p className="text-xs text-gray-400 mb-3">What do you need on the final?</p>
       <div className="space-y-2.5">
         {[
-          { grade: 'A', score: '78%', color: '#14B8A6', width: '78%' },
-          { grade: 'B', score: '61%', color: '#7c3aed', width: '61%' },
+          { grade: 'A', score: '78%', color: '#F05A28', width: '78%' },
+          { grade: 'B', score: '61%', color: '#F59E0B', width: '61%' },
           { grade: 'C', score: '44%', color: '#f59e0b', width: '44%' },
         ].map(({ grade, score, color, width }, i) => (
           <div key={grade}>
@@ -151,7 +151,7 @@ function GradeVisual() {
       </div>
       <div className="mt-4 pt-4 border-t border-gray-100 text-center">
         <span className="text-xs text-gray-400">Current grade: </span>
-        <span className="text-xs font-bold text-[#14B8A6]">84.2% · B</span>
+        <span className="text-xs font-bold text-[#F05A28]">84.2% · B</span>
       </div>
     </div>
   );
@@ -165,19 +165,19 @@ function DashboardVisual() {
         <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Today's Overview</span>
       </div>
       <div className="grid grid-cols-2 gap-3 mb-4">
-        <div className="p-3 rounded-xl bg-[#14B8A6]/8 border border-[#14B8A6]/20">
+        <div className="p-3 rounded-xl bg-[#F05A28]/8 border border-[#F05A28]/20">
           <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">GPA</p>
           <p className="text-xl font-bold text-[#1E293B]">3.72</p>
         </div>
-        <div className="p-3 rounded-xl bg-violet-50 border border-violet-100">
+        <div className="p-3 rounded-xl bg-amber-50 border border-amber-100">
           <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Due Soon</p>
           <p className="text-xl font-bold text-[#1E293B]">3</p>
         </div>
       </div>
       <div className="space-y-2">
         {[
-          { dot: '#14B8A6', label: 'COP Essay', time: 'Today, 11:59 PM' },
-          { dot: '#7c3aed', label: 'MAC Quiz 4', time: 'Tomorrow, 9 AM' },
+          { dot: '#F05A28', label: 'COP Essay', time: 'Today, 11:59 PM' },
+          { dot: '#F59E0B', label: 'MAC Quiz 4', time: 'Tomorrow, 9 AM' },
           { dot: '#f59e0b', label: 'PHY Lab Report', time: 'Friday, 5 PM' },
         ].map(({ dot, label, time }) => (
           <div key={label} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50">
@@ -252,7 +252,7 @@ export default function Landing() {
             </button>
             <button
               onClick={() => navigate('/signup')}
-              className="flex items-center gap-1.5 px-4 py-2.5 bg-[#14B8A6] text-white text-sm font-semibold rounded-xl hover:bg-[#0f9e8e] transition-colors"
+              className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F05A28] text-white text-sm font-semibold rounded-xl hover:bg-[#E05525] transition-colors"
             >
               Get Started
               <ArrowRight className="w-3.5 h-3.5" />
@@ -287,18 +287,18 @@ export default function Landing() {
         {/* Geometric accent — top left */}
         <div
           className="absolute top-20 left-10 w-16 h-16 rounded-2xl opacity-20 pointer-events-none"
-          style={{ background: 'linear-gradient(135deg, #14B8A6, #7c3aed)', transform: 'rotate(18deg)' }}
+          style={{ background: 'linear-gradient(135deg, #F05A28, #F59E0B)', transform: 'rotate(18deg)' }}
         />
         {/* Geometric accent — bottom right */}
         <div
           className="absolute bottom-20 right-14 w-10 h-10 rounded-xl opacity-15 pointer-events-none"
-          style={{ background: 'linear-gradient(135deg, #7c3aed, #14B8A6)', transform: 'rotate(-12deg)' }}
+          style={{ background: 'linear-gradient(135deg, #F59E0B, #F05A28)', transform: 'rotate(-12deg)' }}
         />
 
         <div className="relative z-10 max-w-4xl mx-auto">
           {/* Eyebrow */}
-          <div className="animate-fade-in inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#14B8A6]/10 border border-[#14B8A6]/25 text-[#0f9e8e] text-xs font-semibold mb-8 tracking-wide uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#14B8A6] inline-block animate-pulse" />
+          <div className="animate-fade-in inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F05A28]/10 border border-[#F05A28]/25 text-[#E05525] text-xs font-semibold mb-8 tracking-wide uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F05A28] inline-block animate-pulse" />
             Designed for Florida College Students
           </div>
 
@@ -311,7 +311,7 @@ export default function Landing() {
             <br />
             <span
               className="bg-clip-text text-transparent"
-              style={{ backgroundImage: 'linear-gradient(135deg, #0d9488 0%, #8b5cf6 100%)' }}
+              style={{ backgroundImage: 'linear-gradient(135deg, #D94F1E 0%, #F59E0B 100%)' }}
             >
               Your time, back to you.
             </span>
@@ -334,7 +334,7 @@ export default function Landing() {
           >
             <button
               onClick={() => navigate('/signup')}
-              className="group flex items-center gap-2 px-7 py-4 md:px-9 md:py-5 bg-[#14B8A6] text-white font-semibold text-base rounded-xl hover:bg-[#0f9e8e] transition-all shadow-md hover:shadow-xl active:scale-[0.98]"
+              className="group flex items-center gap-2 px-7 py-4 md:px-9 md:py-5 bg-[#F05A28] text-white font-semibold text-base rounded-xl hover:bg-[#E05525] transition-all shadow-md hover:shadow-xl active:scale-[0.98]"
             >
               Get Started Free
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -360,7 +360,7 @@ export default function Landing() {
       <section className="bg-white py-32 px-5">
         <div className="max-w-5xl mx-auto">
           <FadeIn className="text-center mb-14">
-            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#14B8A6] mb-3">You're not imagining it.</p>
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#F05A28] mb-3">You're not imagining it.</p>
             <h2 className="text-3xl md:text-4xl font-bold text-[#1E293B]">
               You're not the problem.
               <br />
@@ -388,9 +388,9 @@ export default function Landing() {
               },
               {
                 icon: Layers,
-                color: '#7c3aed',
+                color: '#F59E0B',
                 bg: 'rgba(124,58,237,0.07)',
-                accent: '#7c3aed',
+                accent: '#F59E0B',
                 text: "Used your lunch break to figure out what's due this week instead of actually eating",
                 delay: 200,
               },
@@ -426,7 +426,7 @@ export default function Landing() {
       <section id="features" className="bg-[#FAFAFA] py-32 px-5">
         <div className="max-w-5xl mx-auto">
           <FadeIn className="text-center mb-20">
-            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#14B8A6] mb-3">What changes when you use SIGMA</p>
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#F05A28] mb-3">What changes when you use SIGMA</p>
             <h2 className="text-3xl md:text-4xl font-bold text-[#1E293B]">
               One app. Zero missed deadlines.
             </h2>
@@ -436,10 +436,10 @@ export default function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
             <FadeIn>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-[#14B8A6]/10 flex items-center justify-center">
-                  <RefreshCw className="w-5 h-5 text-[#14B8A6]" />
+                <div className="w-10 h-10 rounded-xl bg-[#F05A28]/10 flex items-center justify-center">
+                  <RefreshCw className="w-5 h-5 text-[#F05A28]" />
                 </div>
-                <span className="text-xs font-bold uppercase tracking-widest text-[#14B8A6]">Feature 01</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-[#F05A28]">Feature 01</span>
               </div>
               <h3 className="text-2xl md:text-3xl font-bold text-[#1E293B] mb-4 leading-tight">
                 Your classes, always current
@@ -451,7 +451,7 @@ export default function Landing() {
               </p>
               <button
                 onClick={() => navigate('/signup')}
-                className="text-[#14B8A6] font-semibold text-sm flex items-center gap-1.5 hover:gap-2.5 transition-all"
+                className="text-[#F05A28] font-semibold text-sm flex items-center gap-1.5 hover:gap-2.5 transition-all"
               >
                 Get started free <ArrowRight className="w-4 h-4" />
               </button>
@@ -468,10 +468,10 @@ export default function Landing() {
             </FadeIn>
             <FadeIn>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center">
-                  <Brain className="w-5 h-5 text-violet-600" />
+                <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
+                  <Brain className="w-5 h-5 text-amber-600" />
                 </div>
-                <span className="text-xs font-bold uppercase tracking-widest text-violet-500">Feature 02</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-amber-500">Feature 02</span>
               </div>
               <h3 className="text-2xl md:text-3xl font-bold text-[#1E293B] mb-4 leading-tight">
                 Know your grade before the final hits
@@ -482,7 +482,7 @@ export default function Landing() {
               </p>
               <button
                 onClick={() => navigate('/signup')}
-                className="text-violet-500 font-semibold text-sm flex items-center gap-1.5 hover:gap-2.5 transition-all"
+                className="text-amber-500 font-semibold text-sm flex items-center gap-1.5 hover:gap-2.5 transition-all"
               >
                 See your grade predictions <ArrowRight className="w-4 h-4" />
               </button>
@@ -523,7 +523,7 @@ export default function Landing() {
       <section id="how-it-works" className="bg-white py-32 px-5">
         <div className="max-w-5xl mx-auto">
           <FadeIn className="text-center mb-16">
-            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#14B8A6] mb-3">Simple by design</p>
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#F05A28] mb-3">Simple by design</p>
             <h2 className="text-3xl md:text-4xl font-bold text-[#1E293B]">
               Get started in under 2 minutes.
             </h2>
@@ -534,7 +534,7 @@ export default function Landing() {
             <div
               className="hidden md:block absolute top-10 left-[calc(100%/6+20px)] right-[calc(100%/6+20px)] h-px"
               style={{
-                background: 'linear-gradient(90deg, transparent, #14B8A6, #7c3aed, transparent)',
+                background: 'linear-gradient(90deg, transparent, #F05A28, #F59E0B, transparent)',
                 opacity: 0.3,
               }}
             />
@@ -569,7 +569,7 @@ export default function Landing() {
                   </div>
                   <div
                     className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white text-[11px] font-bold shadow-sm"
-                    style={{ background: 'linear-gradient(135deg, #14B8A6, #7c3aed)' }}
+                    style={{ background: 'linear-gradient(135deg, #F05A28, #F59E0B)' }}
                   >
                     {step}
                   </div>
@@ -588,7 +588,7 @@ export default function Landing() {
           {/* Gradient quote mark */}
           <div
             className="text-7xl font-serif leading-none mb-4 bg-clip-text text-transparent"
-            style={{ backgroundImage: 'linear-gradient(135deg, #14B8A6, #7c3aed)' }}
+            style={{ backgroundImage: 'linear-gradient(135deg, #F05A28, #F59E0B)' }}
           >
             "
           </div>
@@ -603,7 +603,7 @@ export default function Landing() {
           <div className="flex items-center justify-center gap-3">
             <div
               className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold"
-              style={{ background: 'linear-gradient(135deg, #14B8A6, #7c3aed)' }}
+              style={{ background: 'linear-gradient(135deg, #F05A28, #F59E0B)' }}
             >
               N
             </div>
@@ -619,7 +619,7 @@ export default function Landing() {
       <section id="pricing" className="bg-white py-32 px-5">
         <div className="max-w-4xl mx-auto">
           <FadeIn className="text-center mb-14">
-            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#14B8A6] mb-3">Pricing</p>
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#F05A28] mb-3">Pricing</p>
             <h2 className="text-3xl md:text-4xl font-bold text-[#1E293B]">
               Less than a cup of coffee.
             </h2>
@@ -646,7 +646,7 @@ export default function Landing() {
                     'Manual grade entry',
                   ].map((f) => (
                     <li key={f} className="flex items-start gap-2.5 text-sm text-gray-600">
-                      <Check className="w-4 h-4 text-[#14B8A6] flex-shrink-0 mt-0.5" />
+                      <Check className="w-4 h-4 text-[#F05A28] flex-shrink-0 mt-0.5" />
                       {f}
                     </li>
                   ))}
@@ -664,7 +664,7 @@ export default function Landing() {
             <FadeIn delay={120}>
               <div
                 className="p-8 rounded-2xl border-2 h-full flex flex-col relative overflow-hidden hover:scale-[1.02] transition-all duration-300 hover:shadow-glass-sm"
-                style={{ borderColor: '#14B8A6', background: 'linear-gradient(160deg, rgba(20,184,166,0.04) 0%, white 50%)' }}
+                style={{ borderColor: '#F05A28', background: 'linear-gradient(160deg, rgba(20,184,166,0.04) 0%, white 50%)' }}
               >
                 {/* Shimmer sweep */}
                 <div
@@ -678,12 +678,12 @@ export default function Landing() {
                 {/* Popular badge */}
                 <div
                   className="absolute top-5 right-5 px-3 py-1 rounded-full text-white text-[11px] font-bold uppercase tracking-wider"
-                  style={{ background: 'linear-gradient(135deg, #14B8A6, #7c3aed)' }}
+                  style={{ background: 'linear-gradient(135deg, #F05A28, #F59E0B)' }}
                 >
                   Most Popular
                 </div>
                 <div className="mb-6">
-                  <p className="text-sm font-bold uppercase tracking-widest text-[#14B8A6] mb-2">Pro</p>
+                  <p className="text-sm font-bold uppercase tracking-widest text-[#F05A28] mb-2">Pro</p>
                   <div className="flex items-end gap-1">
                     <span className="text-5xl font-bold text-[#1E293B]">$4.99</span>
                     <span className="text-gray-400 mb-1.5">/month</span>
@@ -701,7 +701,7 @@ export default function Landing() {
                     'Everything in Free',
                   ].map((f) => (
                     <li key={f} className="flex items-start gap-2.5 text-sm text-[#1E293B]">
-                      <Check className="w-4 h-4 text-[#14B8A6] flex-shrink-0 mt-0.5" />
+                      <Check className="w-4 h-4 text-[#F05A28] flex-shrink-0 mt-0.5" />
                       {f}
                     </li>
                   ))}
@@ -709,7 +709,7 @@ export default function Landing() {
                 <button
                   onClick={() => navigate('/signup')}
                   className="w-full py-3 rounded-xl text-white font-semibold text-sm transition-all hover:opacity-90 active:scale-[0.98]"
-                  style={{ background: 'linear-gradient(135deg, #14B8A6, #7c3aed)' }}
+                  style={{ background: 'linear-gradient(135deg, #F05A28, #F59E0B)' }}
                 >
                   Start Free →
                 </button>
@@ -722,7 +722,7 @@ export default function Landing() {
       {/* ── FINAL CTA ─────────────────────────────────────────────────────── */}
       <section
         className="py-28 px-5 relative overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #0f9e8e 0%, #14B8A6 40%, #7c3aed 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #E05525 0%, #F05A28 40%, #F59E0B 100%)' }}
       >
         {/* Subtle geometric shapes */}
         <div
@@ -745,7 +745,7 @@ export default function Landing() {
           </p>
           <button
             onClick={() => navigate('/signup')}
-            className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-[#0f9e8e] font-bold text-base rounded-xl hover:bg-white/90 transition-all shadow-lg active:scale-[0.98]"
+            className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-[#E05525] font-bold text-base rounded-xl hover:bg-white/90 transition-all shadow-lg active:scale-[0.98]"
           >
             Get Started Free
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -758,7 +758,7 @@ export default function Landing() {
 
       {/* ── FOOTER ────────────────────────────────────────────────────────── */}
       <footer className="bg-[#0f172a] py-10 px-5 relative">
-        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, #14B8A6, #8b5cf6)' }} />
+        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, #F05A28, #F59E0B)' }} />
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-gray-400 text-sm font-medium">© 2026 NavTech · yoursigma.ai</p>
