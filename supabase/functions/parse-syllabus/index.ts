@@ -101,6 +101,9 @@ EXAMPLES OF WHAT TO DO:
   - "Exam 2" - 100 points - 10% weight
   - "Exam 3" - 100 points - 10% weight
 
+**CRITICAL — NO DATE FABRICATION:**
+When splitting grouped assignments (e.g., "5 Presentations", "3 Exams"), set dueDate: null for EVERY individual entry UNLESS the syllabus explicitly provides a specific date for that exact item. Do NOT interpolate, estimate, calculate, or invent dates. A null dueDate is always correct when the date is not stated in the syllabus. This applies even if you know the semester dates or can infer a schedule.
+
 **RULE 3: ASSIGNMENT TYPE MAPPING**
 
 Map assignments to the correct type field:
@@ -126,7 +129,10 @@ Look for and extract:
 - Extra credit: Opportunities, max points, requirements
 - Minimum requirements: Must pass final? Complete all assignments?
 - Attendance: Impact on grade, allowed absences, penalties
-- Drop lowest: Which categories? How many?
+- Drop lowest: Which categories? How many? Set the dropLowest field on the matching gradingCategory.
+  Example: "I will drop your lowest quiz score" → Quizzes category: dropLowest: 1
+  Example: "Drop lowest 2 homework grades" → Homework category: dropLowest: 2
+  Example: "No drops mentioned" → All categories: dropLowest: 0
 - Participation: How graded? What counts?
 - Recording: Can students record? Are lectures recorded?
 - Technology: Required software, hardware, internet speed
@@ -173,7 +179,13 @@ Extract:
 1. Identify semester and year FIRST (e.g., "Spring 2026")
 2. Use the CORRECT YEAR for all dates (Spring 2026 = 2026, NOT 2025)
 3. Format dates as YYYY-MM-DD
-4. Extract ALL important dates:
+4. NEVER fabricate dates — if a date is not explicitly stated, use null
+5. For the lateWork policy, extract maximumLateDays as a number:
+   Example: "accepted up to 3 days late" → maximumLateDays: 3
+   Example: "no late work accepted" → maximumLateDays: 0
+   Example: "one week late maximum" → maximumLateDays: 7
+   If only a penalty is mentioned with no day limit, set maximumLateDays: null
+6. Extract ALL important dates:
    - First/last day of class
    - Drop deadline, withdrawal deadline
    - Holidays, breaks, no-class days
@@ -198,6 +210,32 @@ Extract policies about:
 - Pets/service animals
 - Dress code for presentations
 - Participation expectations
+
+**RULE 11: AI POLICY TYPE — STRICT ENUM**
+
+The aiPolicy.type field MUST be exactly one of these four values (no other text):
+- "Prohibited"   — AI tools are explicitly not allowed in this course
+- "Permitted"    — AI tools are explicitly allowed (with or without citation requirement)
+- "Restricted"   — AI tools are allowed only for specific tasks, assignments, or with conditions
+- "NotMentioned" — The syllabus does not mention AI tools, ChatGPT, or AI policy at all
+
+Do NOT use "AI Prohibited", "AI Permitted", "AI Flexible", "AI Required", or any other variation.
+
+**RULE 12: CONFIDENCE OBJECT AND PARSING WARNINGS**
+
+After parsing, populate the confidence object based on what you actually found:
+- gradesComplete: true if ALL grading categories have weights that sum to ~100%
+- hasAllDates: true only if EVERY assignment has a non-null dueDate
+- hasPolicies: true if late work and attendance policies were found
+- weightSum: the actual numeric sum of all gradingCategory weights (e.g., 100 or 95)
+- datesFoundCount: count of assignments where dueDate is NOT null
+
+Populate parsingWarnings with a plain-English string for each issue found:
+- Missing due dates: "X of Y assignments have no due date in syllabus"
+- Weight mismatch: "Grading weights sum to X%, expected 100%"
+- Missing policies: "No late work policy found"
+- No AI policy: "No AI/ChatGPT policy mentioned in syllabus"
+- Any other data quality issues you notice
 
 =============================================================================
 VALIDATION CHECKS BEFORE RETURNING
@@ -407,7 +445,8 @@ Extract and return a JSON object with this EXACT structure:
       "category": "Presentations",
       "weight": 10,
       "points": 100,
-      "dueDate": "2026-02-15 or null",
+      "perItemWeight": 10,
+      "dueDate": "ONLY if a specific date is stated in the syllabus for this exact item — otherwise null",
       "dueTime": "11:59 PM or null",
       "module": 1,
       "description": "Description or null",
@@ -573,7 +612,7 @@ Extract and return a JSON object with this EXACT structure:
   },
   
   "aiPolicy": {
-    "type": "AI Prohibited | AI Permitted | AI Flexible | AI Required",
+    "type": "Prohibited | Permitted | Restricted | NotMentioned",
     "permitted": false,
     "restrictions": "Full description of restrictions",
     "citationRequired": false,
@@ -767,14 +806,35 @@ Extract and return a JSON object with this EXACT structure:
     "instructorCanWithdraw": true,
     "instructorWithdrawalConditions": "Four consecutive absences",
     "consequences": "No refund after deadline"
-  }
+  },
+
+  "confidence": {
+    "gradesComplete": true,
+    "hasAllDates": false,
+    "hasPolicies": true,
+    "weightSum": 100,
+    "datesFoundCount": 3
+  },
+
+  "parsingWarnings": [
+    "12 of 15 assignments have no due date in syllabus",
+    "Grading weights sum to 95%, expected 100%"
+  ]
 }
 
 IMPORTANT FINAL CHECKS:
 ✓ Did you split ALL grouped assignments into individual entries?
 ✓ Do all assignment weights sum to 100%?
+✓ Did you set dueDate: null for assignments with no explicit date in the syllabus?
 ✓ Did you use the correct year from the semester for all dates?
 ✓ Did you map assignment types correctly?
+✓ Did you calculate perItemWeight for every assignment (= category weight ÷ count)?
+✓ Did you set dropLowest on each gradingCategory (0 if not mentioned)?
+✓ Is aiPolicy.type exactly one of: Prohibited | Permitted | Restricted | NotMentioned?
+✓ Did you extract maximumLateDays as a number (not buried in penalty text)?
+✓ Did you populate confidence.weightSum with the actual numeric total?
+✓ Did you populate confidence.datesFoundCount with the actual count?
+✓ Did you list all data quality issues in parsingWarnings?
 ✓ Did you extract submission methods for assignments?
 ✓ Did you capture technology requirements?
 ✓ Did you include contact info for all support resources?
