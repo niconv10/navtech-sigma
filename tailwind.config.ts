@@ -301,6 +301,14 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px rgba(6, 182, 212, 0.4)" },
           "50%": { boxShadow: "0 0 40px rgba(6, 182, 212, 0.6)" },
         },
+        "collapsible-down": {
+          from: { height: "0", opacity: "0" },
+          to: { height: "var(--radix-collapsible-content-height)", opacity: "1" },
+        },
+        "collapsible-up": {
+          from: { height: "var(--radix-collapsible-content-height)", opacity: "1" },
+          to: { height: "0", opacity: "0" },
+        },
       },
       
       // ============================================
@@ -320,6 +328,8 @@ export default {
         "pulse-soft": "pulse-soft 2s infinite ease-in-out",
         "float": "float 3s infinite ease-in-out",
         "glow-pulse": "glow-pulse 2s infinite ease-in-out",
+        "collapsible-down": "collapsible-down 0.25s ease-out",
+        "collapsible-up": "collapsible-up 0.2s ease-out",
       },
       
       // ============================================

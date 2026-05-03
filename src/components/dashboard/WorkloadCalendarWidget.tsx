@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, isToday, addMonths, subMonths, parseISO, isBefore, isAfter, addDays } from "date-fns";
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 
 interface Assignment {
   id?: string;
@@ -21,6 +22,7 @@ interface WorkloadCalendarWidgetProps {
 export function WorkloadCalendarWidget({ assignments }: WorkloadCalendarWidgetProps) {
   const navigate = useNavigate();
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [isOpen, setIsOpen] = useState(true);
 
   // Get assignments for the current month
   const monthAssignments = useMemo(() => {
@@ -82,9 +84,9 @@ export function WorkloadCalendarWidget({ assignments }: WorkloadCalendarWidgetPr
   const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
   return (
-    <div className="glass-widget overflow-hidden">
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="glass-widget overflow-hidden">
       {/* Header */}
-      <div className="px-4 py-3 sm:px-6 sm:py-4 border-b border-border flex items-center justify-between">
+      <div className={`px-4 py-3 sm:px-6 sm:py-4 ${isOpen ? 'border-b border-border' : ''} flex items-center justify-between`}>
         <div className="flex items-center gap-3">
           <div className="calendar-header-nav">
             <button
@@ -104,15 +106,23 @@ export function WorkloadCalendarWidget({ assignments }: WorkloadCalendarWidgetPr
             </button>
           </div>
         </div>
-        
-        <button
-          onClick={() => navigate("/courses/upload")}
-          className="calendar-nav-btn"
-        >
-          <Plus className="w-4 h-4" />
-        </button>
+
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => navigate("/courses/upload")}
+            className="calendar-nav-btn"
+          >
+            <Plus className="w-4 h-4" />
+          </button>
+          <CollapsibleTrigger asChild>
+            <button className="p-1 rounded-md hover:bg-secondary/50 transition-colors text-muted-foreground hover:text-foreground">
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? '' : '-rotate-90'}`} />
+            </button>
+          </CollapsibleTrigger>
+        </div>
       </div>
 
+      <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
       {/* Content - Two column layout */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px]">
         {/* Calendar Grid */}
@@ -228,6 +238,7 @@ export function WorkloadCalendarWidget({ assignments }: WorkloadCalendarWidgetPr
           )}
         </div>
       </div>
-    </div>
+      </CollapsibleContent>
+    </Collapsible>
   );
 }
